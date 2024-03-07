@@ -1,6 +1,6 @@
 const repositoryOwner = 'jackson22153fake';
 const repository = 'BlogImgRepository';
-const token = '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';
+const token = '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';
 
 async function uploadImage(contentBase64, extension){
     if(extension === 'jpg') extension = 'jpeg';
