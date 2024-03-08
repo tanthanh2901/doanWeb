@@ -49,6 +49,7 @@
 
 </head>
 <body>
+    
     <!--Script-->  
     <form id="text-editor" method="post" action="post-saving.php" enctype="multipart/form-data">
         <div id="text-editor-header" class="d-flex justify-content-center">
