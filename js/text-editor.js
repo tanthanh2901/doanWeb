@@ -500,19 +500,27 @@ writingArea.addEventListener('paste', (event)=>{
     // get current line
     const line = document.activeElement;
     // Do whatever with pasteddata
-    line.innerHTML=pastedData;
+    // line.innerHTML=pastedData;
+    if(line.tagName !== 'DIV' && !line.classList.contains('line') ||
+      line.innerHTML !== ''){
+        // not a div line or have text inside
+      createLine(pastedData);
 
-    // Create a new range and selection
-    var range = document.createRange();
-    var sel = window.getSelection();
-
-    // Set the range to the end of the div
-    range.setStart(line, line.childNodes.length);
-    range.collapse(true);
-
-    // Clear the selection and add the new range
-    sel.removeAllRanges();
-    sel.addRange(range);
+    }else {
+      // a div line with no text
+      line.innerHTML = pastedData;
+      // Create a new range and selection
+      var range = document.createRange();
+      var sel = window.getSelection();
+  
+      // Set the range to the end of the div
+      range.setStart(line, line.childNodes.length);
+      range.collapse(true);
+  
+      // Clear the selection and add the new range
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
   }
 });
 // submit event
