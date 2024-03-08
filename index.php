@@ -1,3 +1,7 @@
+<?php  
+   require "classes/auth.php";
+   session_start();
+?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
   <head>
@@ -17,7 +21,7 @@
     <!-- meta character set -->
     <meta charset="UTF-8" />
     <!-- Site Title -->
-    <title>Archive</title>
+    <title>Revive</title>
 
     <link
       href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Playfair+Display:700,700i"
@@ -38,22 +42,74 @@
   </head>
 
   <body>
-    <!--================ Start Header Area =================-->
     <header class="header-area">
+      <!-- top bar -->
+      <div class="topbar">
+				<div class="content-topbar container h-100">
+					<div class="left-topbar">
+						<!-- <span class="left-topbar-item flex-wr-s-c">
+							<span>
+								New York, NY
+							</span>
+
+							<img class="m-b-1 m-rl-8" src="images/icons/icon-night.png" alt="IMG">
+
+							<span>
+								HI 58° LO 56°
+							</span>
+						</span> -->
+            <?php
+              echo '<a href="#" class="left-topbar-item">About</a>';
+              echo '<a href="#" class="left-topbar-item">Contact</a>';
+              echo '<a href="registration.php" class="left-topbar-item">Sign up</a>';
+              if(Auth::isLoggedIn()){
+                echo '<a href="logout.php" class="left-topbar-item">Logout</a>';
+              }
+              else{
+                echo '<a href="login.php" class="left-topbar-item">Login</a>';
+              }
+            ?>
+						
+					</div>
+
+					<div class="right-topbar">
+						<a href="#">
+							<span class="fab fa-facebook-f"></span>
+						</a>
+
+						<a href="#">
+							<span class="fab fa-twitter"></span>
+						</a>
+
+						<a href="#">
+							<span class="fab fa-pinterest-p"></span>
+						</a>
+
+						<a href="#">
+							<span class="fab fa-vimeo-v"></span>
+						</a>
+
+						<a href="#">
+							<span class="fab fa-youtube"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+      <!--================ Start Header Area =================-->
       <div class="container">
         <div class="header-wrap">
           <div
             class="header-top d-flex justify-content-between align-items-lg-center navbar-expand-lg"
           >
             <div class="col menu-left">
-              <a class="active" href="index.html">Home</a>
-              <a href="category.html">Category</a>
-              <a href="archive.html">Archive</a>
+              <a class="active" href="index.php">Home</a>
+              <a href="category.php">Category</a>
+              <a href="archive.php">Archive</a>
             </div>
             <div class="col-5 text-lg-center mt-2 mt-lg-0">
               <span class="logo-outer">
                 <span class="logo-inner">
-                  <a href="index.html"
+                  <a href="index.php"
                     ><img class="mx-auto" src="img/logo.png" alt=""
                   /></a>
                 </span>
@@ -77,10 +133,10 @@
               >
                 <ul class="navbar-nav justify-content-center w-100">
                   <li class="nav-item hide-lg">
-                    <a class="nav-link" href="index.html">Home</a>
+                    <a class="nav-link" href="index.php">Home</a>
                   </li>
                   <li class="nav-item hide-lg">
-                    <a class="nav-link" href="category.html">Category</a>
+                    <a class="nav-link" href="category.php">Category</a>
                   </li>
                   <!-- Dropdown -->
                   <!-- <li class="nav-item dropdown">
@@ -93,18 +149,21 @@
                       Pages
                     </a>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="elements.html">Elements</a>
+                      <a class="dropdown-item" href="elements.php">Elements</a>
                     </div>
                   </li> -->
                   <li class="nav-item">
-                    <a class="nav-link" href="elements.html">Elements</a>
+                    <a class="nav-link" href="elements.php">Elements</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="blog-single.html">Blog Detail</a>
+                    <a class="nav-link" href="blog-single.php">Blog Detail</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
+                    <a class="nav-link" href="contact.php">Contact</a>
                   </li>
+                  <!-- <li class="nav-item">
+                    <a class="nav-link" >Login</a>
+                  </li> -->
                 </ul>
               </div>
             </nav>
@@ -112,14 +171,72 @@
         </div>
       </div>
     </header>
-    <!--================ End Header Area =================-->
-
+      
     <!--================ Start banner Area =================-->
-    <section class="banner-area relative">
-        <div class="overlay overlay-bg"></div>
-      <div class="banner-content text-center">
-        <h1>Post Archive</h1>
-        <p>Elementum libero hac leo integer. Risus hac parturient feugiat litora <br /> cursus hendrerit bibendum per </p>
+    <section class="home-banner-area relative">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="owl-carousel home-banner-owl">
+            <div class="banner-img">
+              <img class="img-fluid" src="img/banner/b1.jpg" alt="" />
+              <div class="text-wrapper">
+                <a href="#" class="d-flex">
+                  <h1>
+                    Make the world a better place <br />
+                    with camera
+                  </h1>
+                </a>
+              </div>
+            </div>
+            <div class="banner-img">
+              <img class="img-fluid" src="img/banner/b2.jpg" alt="" />
+              <div class="text-wrapper">
+                <a href="#" class="d-flex">
+                  <h1>
+                    Make the world a better place <br />
+                    with camera
+                  </h1>
+                </a>
+              </div>
+            </div>
+            <div class="banner-img">
+              <img class="img-fluid" src="img/banner/b1.jpg" alt="" />
+              <div class="text-wrapper">
+                <a href="#" class="d-flex">
+                  <h1>
+                    Make the world a better place <br />
+                    with camera
+                  </h1>
+                </a>
+              </div>
+            </div>
+            <div class="banner-img">
+              <img class="img-fluid" src="img/banner/b2.jpg" alt="" />
+              <div class="text-wrapper">
+                <a href="#" class="d-flex">
+                  <h1>
+                    Make the world a better place <br />
+                    with camera
+                  </h1>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="social-icons">
+        <ul>
+          <li>
+            <a href="index.php"><i class="fa fa-facebook"></i></a>
+          </li>
+          <li>
+            <a href="index.php"><i class="fa fa-twitter"></i></a>
+          </li>
+          <li>
+            <a href="index.php"><i class="fa fa-pinterest"></i></a>
+          </li>
+          <li class="diffrent">sharre now</li>
+        </ul>
       </div>
     </section>
     <!--================ End banner Area =================-->
@@ -570,7 +687,7 @@
                         <img class="img-fluid" src="img/blog/pp1.jpg" alt="">
                       </div>
                       <div class="details mt-20">
-                        <a href="blog-single.html">
+                        <a href="blog-single.php">
                           <h6>Retro-electric 1967 Ford Mustang 
                               revealed in Russia</h6>
                         </a>
@@ -582,7 +699,7 @@
                         <img class="img-fluid" src="img/blog/pp2.jpg" alt="">
                       </div>
                       <div class="details mt-20">
-                        <a href="blog-single.html">
+                        <a href="blog-single.php">
                           <h6>Unsettling trend of food safety at 
                               sports stadiums uncovered</h6>
                         </a>
@@ -594,7 +711,7 @@
                         <img class="img-fluid" src="img/blog/pp3.jpg" alt="">
                       </div>
                       <div class="details mt-20">
-                        <a href="blog-single.html">
+                        <a href="blog-single.php">
                           <h6>Christmas cottage from the Holiday
                               flick selling for people</h6>
                         </a>
@@ -606,7 +723,7 @@
                         <img class="img-fluid" src="img/blog/pp4.jpg" alt="">
                       </div>
                       <div class="details mt-20">
-                        <a href="blog-single.html">
+                        <a href="blog-single.php">
                           <h6>Home improvement advice every 
                               homeowner needs to know</h6>
                         </a>
@@ -653,81 +770,7 @@
     </section>
     <!--================ End Blog Post Area =================-->
 
-    <!--================ Start Footer Area =================-->
-    <footer class="footer-area section-gap">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3  col-md-6 col-sm-6">
-            <div class="single-footer-widget">
-              <h6>About Us</h6>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore
-                magna aliqua.
-              </p>
-            </div>
-          </div>
-          <div class="col-lg-4  col-md-6 col-sm-6">
-            <div class="single-footer-widget">
-              <h6>Newsletter</h6>
-              <p>Stay update with our latest</p>
-              <div class="" id="mc_embed_signup">
-  
-                <form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                 method="get" class="form-inline">
-  
-                  <div class="d-flex flex-row">
-  
-                    <input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
-                     required="" type="email">
-  
-  
-                    <button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
-                    <div style="position: absolute; left: -5000px;">
-                      <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
-                    </div>
-                  </div>
-                  <div class="info"></div>
-                </form>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3  col-md-6 col-sm-6">
-            <div class="single-footer-widget mail-chimp">
-              <h6 class="mb-20">Instragram Feed</h6>
-              <ul class="instafeed d-flex flex-wrap">
-                <li><img src="img/instagram/i1.jpg" alt=""></li>
-                <li><img src="img/instagram/i2.jpg" alt=""></li>
-                <li><img src="img/instagram/i3.jpg" alt=""></li>
-                <li><img src="img/instagram/i4.jpg" alt=""></li>
-                <li><img src="img/instagram/i5.jpg" alt=""></li>
-                <li><img src="img/instagram/i6.jpg" alt=""></li>
-                <li><img src="img/instagram/i7.jpg" alt=""></li>
-                <li><img src="img/instagram/i8.jpg" alt=""></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-2 col-md-6 col-sm-6">
-            <div class="single-footer-widget">
-              <h6>Follow Us</h6>
-              <p>Let us be social</p>
-              <div class="footer-social d-flex align-items-center">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-dribbble"></i></a>
-                <a href="#"><i class="fa fa-behance"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
-          <p class="footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-        </div>
-      </div>
-    </footer>
-    <!--================ End Footer Area =================-->
-
+    <?php require "inc/footer.php"; ?>
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
