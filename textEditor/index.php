@@ -43,7 +43,6 @@
     <link rel="stylesheet" href="../css/text-editor-saving.css"/>
     <link rel="stylesheet" href="../css/text-editor.css">
 
-
     <script src="../js/getDotenv.js"></script>
     <script src="../js/imageProcessing.js"></script>
 
