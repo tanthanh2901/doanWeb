@@ -1,13 +1,16 @@
 const repositoryOwner = 'jackson22153fake';
 const repository = 'BlogImgRepository';
-const token = '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';
+let token = '';
+
+
 
 async function uploadImage(contentBase64, extension){
-    if(extension === 'jpg') extension = 'jpeg';
-    content = contentBase64.replace(`data:image/${extension};base64,`, '');
+    var content = contentBase64.split(';base64,').pop();
+    // content = contentBase64.replace(`data:image/${extension};base64,`, '');
     var uuid = crypto.randomUUID();
     const fileName = `${uuid}.${extension}`;
     const url = `https://api.github.com/repos/${repositoryOwner}/${repository}/contents/${fileName}`;
+
     const data = {
         message: 'imageUpload',
         committer: {
@@ -16,8 +19,19 @@ async function uploadImage(contentBase64, extension){
         },
         content: content
     };
-    
 
+    await fetch('../.env').then(res => res.text())
+    .then(text => {
+        const lines = text.split('\n');
+        lines.forEach(line => {
+            if(line) {
+                const [key, value] = line.split('=');
+                token = value;
+            }else throw Error("dont have any token");
+        });
+    });
+
+    // const token = value;
     return await fetch(url, {
         method: 'PUT',
         headers: {

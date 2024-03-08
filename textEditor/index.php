@@ -42,6 +42,11 @@
     <!-- <link rel="stylesheet" href="../css/main.css"/> -->
     <link rel="stylesheet" href="../css/text-editor-saving.css"/>
     <link rel="stylesheet" href="../css/text-editor.css">
+
+
+    <script src="../js/getDotenv.js"></script>
+    <script src="../js/imageProcessing.js"></script>
+
 </head>
 <body>
     <!--Script-->  
@@ -223,7 +228,6 @@
     </form>
 </body>
 <!-- <script src="../js/imgProperties.js"></script> -->
-<script src="../js/imageProcessing.js"></script>
-<script src="../js/text-editor.js"></script>
 <script src="../js/categoryCheckBox.js"></script>
+<script src="../js/text-editor.js" defer></script>
 </html>

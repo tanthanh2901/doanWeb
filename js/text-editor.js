@@ -1,3 +1,4 @@
+
 let optionSection = document.getElementById('options-section');
 let optionsButtons = document.querySelectorAll(".option-button");
 let advancedOptionButton = document.querySelectorAll(".adv-option-button");
@@ -22,6 +23,8 @@ let textEditorSubmit = document.getElementById('text-editor-submit');
 let modalOverlay = document.querySelector('.modal');
 let inputPostImage = document.getElementById('input-post-image');
 let postThumbnailImage = document.getElementById('post-thumbnail-image');
+
+
 
 // modal
 let imageUrl = null;
@@ -467,42 +470,17 @@ writingArea.addEventListener('paste', (event)=>{
     if(!(currLine.className.includes('title') && currLine.tagName === 'H1')){
       var blob = item.getAsFile();
       var reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = async function(e) {
         e.preventDefault()
         // get image base64
         let imgSrc = e.target.result;
-        uploadImage(imgSrc, 'png')
+        await uploadImage(imgSrc, 'png')
         .then(res => res.json())
         .then(data => {
           // console.log(data);
           const content = data.content;
           imgSrc = content.download_url;
           insertImage(imgSrc, currLine);
-          // const newDiv =createImg(imgSrc)
-          // // console.log(newDiv)
-          // if(currLine.tagName === 'IMG'){
-          //   const divLine =  currLine.closest('div.line');
-          //   writingArea.insertBefore(newDiv, divLine);
-          // }else if(currLine.tagName !== 'DIV' && !currLine.classList.contains('line') ||
-          //   currLine.innerHTML !== null){
-          //     // not a div line or have text inside
-          //   createLine(newDiv.innerHTML);
-          // }else {
-          //   // a div line with no text
-          //   currLine.innerHTML = newDiv.innerHTML;
-          // }
-  
-          // setTimeout(() => {
-          //   var range = document.createRange();
-          //   var sel = window.getSelection();
-  
-          //   range.setStart(newDiv, 0);
-          //   range.collapse(true);
-  
-          //   sel.removeAllRanges();
-          //   sel.addRange(range);
-          //   newDiv.focus();
-          // }, 0);
         })
         .catch((error) => console.error('Error:', error));
 
