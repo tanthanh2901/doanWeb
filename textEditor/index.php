@@ -163,7 +163,7 @@
         <div class="buttons-form">
             <span id="next-button" class="btn btn-primary toggle-button">Next</span>
         </div>
-    <!-- modal -->
+        <!-- modal -->
         <div class="modal modal-overlay" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -177,7 +177,7 @@
                                 <select class="form-select w-auto mx-2" aria-label="Default select example" name="state" id="state-selector">
                                     <?php foreach($states as $state): ?>
                                         <option value=<?=$state->stateValue?>><?=$state->stateName?></option>        
-                                    <?php endforeach?>
+                                    <?php endforeach; ?>
                                 </select>
                             </div><hr>
 
@@ -208,7 +208,7 @@
                                                 <?=$category->category?>
                                             </label>
                                         </div>
-                                    <? endforeach?>
+                                    <?php endforeach;?>
                                 </div>
                             </div><hr>
                             <!-- button -->
