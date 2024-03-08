@@ -208,7 +208,7 @@
                                                     <?=$category->category?>
                                                 </label>
                                             </div>
-                                        <? endforeach;?>
+                                        <?php endforeach;?>
                                     </div>
                                 </div><hr>
                                 <!-- button -->
