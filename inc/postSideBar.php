@@ -15,7 +15,7 @@
             <ul class="cat-list mt-20">
                 <?php foreach($categories as $category):?>
                     <li>
-                        <a href="#" class="d-flex justify-content-between">
+                        <a href="/category.php/<?=$category->category?>" class="d-flex justify-content-between">
                         <p><?=ucfirst($category->category)?></p>
                         <!-- <p>59</p> -->
                         </a>
