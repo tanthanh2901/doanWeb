@@ -19,6 +19,29 @@
             $states = $stmt->fetchAll(); // Lấy ra cái đối tượng
             return $states;
         }
+        // get category by id
+        public static function getCategoryByID($categoryID, $conn){
+            $sql = "select * from categories where id=:categoryID";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':categoryID', $categoryID, PDO::PARAM_STR);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Category'); //Trả về 1 đổi tượng
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $states = $stmt->fetch(); // Lấy ra cái đối tượng
+            return $states;
+        }
+        // get categories by ids
+        public static function getCategoriesByIDs($categoryIDs, $conn){
+            $placeholders = implode(',', array_fill(0, count($categoryIDs), '?'));
+            $sql = "SELECT * FROM categories WHERE id IN ($placeholders)";
+            $stmt = $conn->prepare($sql);
+            foreach ($categoryIDs as $index => $category) {
+                $stmt->bindValue($index + 1, $category, PDO::PARAM_STR);
+            }
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Category');
+            $stmt->execute();
+            $states = $stmt->fetchAll();
+            return $states;
+        }
         // get category by name
         public static function getCategory($category, $conn){
             $sql = "select * from categories where category=:category";
@@ -29,7 +52,7 @@
             $states = $stmt->fetch(); // Lấy ra cái đối tượng
             return $states;
         }
-        // get category by name
+        // get category by names
         public static function getCategories($categories, $conn){
             $placeholders = implode(',', array_fill(0, count($categories), '?'));
             $sql = "SELECT * FROM categories WHERE category IN ($placeholders)";

@@ -176,7 +176,7 @@
                                     </div>
                                     <select class="form-select w-auto mx-2" aria-label="Default select example" name="state" id="state-selector">
                                         <?php foreach($states as $state): ?>
-                                            <option value=<?=$state->stateValue?>><?=$state->stateName?></option>        
+                                            <option value=<?=$state->id?>><?=$state->stateName?></option>        
                                         <?php endforeach; ?>
                                     </select>
                                 </div><hr>
