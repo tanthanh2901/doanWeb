@@ -54,8 +54,15 @@
 
 	</head>
 	<body>
-	<section class="ftco-section">
+	<section class="m-5">
 		<div class="container">
+			<!-- back to home -->
+			<div class="row justify-content-center">
+				<div class="d-flex justify-content-center align-items-center p-4" >
+					<a href="index.php"><img src="img/logo.png" alt="logo"></a>
+				</div>
+			</div>
+			<!-- login -->
 			<div class="row justify-content-center">
 				<div class="col-md-12 col-lg-10">
 					<div class="wrap d-md-flex">

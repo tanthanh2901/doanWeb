@@ -56,47 +56,54 @@
 
 	</head>
 	<body>
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-12 col-lg-10">
-					<div class="wrap d-md-flex">
-						<div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center">
-							<div class="text w-100">
-								<h2>Welcome to Sign Up</h2>
-								<p>Have an account before?</p>
-								<a href="login.php" class="btn btn-white btn-outline-white">Sign In</a>
+		<section class="m-5">
+			<div class="container">
+				<!-- back to home -->
+				<div class="row justify-content-center">
+					<div class="d-flex justify-content-center align-items-center p-4" >
+						<a href="index.php"><img src="img/logo.png" alt="logo"></a>
+					</div>
+				</div>
+				<!-- register -->
+				<div class="row justify-content-center">
+					<div class="col-md-12 col-lg-10">
+						<div class="wrap d-md-flex">
+							<div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center">
+								<div class="text w-100">
+									<h2>Welcome to Sign Up</h2>
+									<p>Have an account before?</p>
+									<a href="login.php" class="btn btn-white btn-outline-white">Sign In</a>
+								</div>
 							</div>
-			      		</div>
-						<div class="login-wrap p-4 p-lg-5 order-md-last">
-							<div class="d-flex">
-								<div class="w-100">
-									<h3 class="mb-4" style=" font-weight: 500;">Sign Up</h3>
+							<div class="login-wrap p-4 p-lg-5 order-md-last">
+								<div class="d-flex">
+									<div class="w-100">
+										<h3 class="mb-4" style=" font-weight: 500;">Sign Up</h3>
+									</div>
+									
 								</div>
-								
+								<form action="registration.php" class="signup-form" method="post">
+									<div class="form-group mb-3">
+										<label class="label" for="name">Email</label>
+										<input type="Email" class="form-control" placeholder="Email" name="email" required>
+									</div>
+									<div class="form-group mb-3">
+										<label class="label" for="password">Password</label>
+										<input type="password" class="form-control" placeholder="Password" name="password" required>
+									</div>
+									<div class="form-group mb-3">
+										<label class="label" for="name">Repeat Password</label>
+										<input type="password" class="form-control" placeholder="Repeat Password" name="repeat_password" required>
+									</div>
+									<div class="form-group">
+										<input type="submit" value="Sign Up" name="submit" class="form-control btn btn-primary submit px-3">
+									</div>
+								</form>
 							</div>
-							<form action="registration.php" class="signup-form" method="post">
-								<div class="form-group mb-3">
-									<label class="label" for="name">Email</label>
-									<input type="Email" class="form-control" placeholder="Email" name="email" required>
-								</div>
-								<div class="form-group mb-3">
-									<label class="label" for="password">Password</label>
-									<input type="password" class="form-control" placeholder="Password" name="password" required>
-								</div>
-								<div class="form-group mb-3">
-									<label class="label" for="name">Repeat Password</label>
-									<input type="password" class="form-control" placeholder="Repeat Password" name="repeat_password" required>
-								</div>
-								<div class="form-group">
-									<input type="submit" value="Sign Up" name="submit" class="form-control btn btn-primary submit px-3">
-								</div>
-							</form>
 						</div>
-		      		</div>
+					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 	</body>
 </html>
