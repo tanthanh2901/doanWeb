@@ -46,6 +46,17 @@
             $states = $stmt->fetch(); // Lấy ra cái đối tượng
             return $states;
         }
+        // get post by categoryID
+        public static function getPostsByCategoryID($categoryID, $stateID, $conn){
+            $sql = "select * from posts where categoryID=:categoryID AND stateID=:stateID";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':stateID', $stateID, PDO::PARAM_STR);
+            $stmt->bindValue(':categoryID', $categoryID, PDO::PARAM_STR);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post'); //Trả về 1 đổi tượng
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $states = $stmt->fetch(); // Lấy ra cái đối tượng
+            return $states;
+        }
         // add post 
         public function addPost($conn){
             if($this->validate()){  
