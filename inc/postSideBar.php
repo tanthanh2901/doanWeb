@@ -1,5 +1,4 @@
 <!-- parameters: categories -->
-
 <div class="col-lg-4 sidebar-widgets">
     <div class="widget-wrap">
         <div class="single-sidebar-widget search-widget">
@@ -15,7 +14,7 @@
             <ul class="cat-list mt-20">
                 <?php foreach($categories as $category):?>
                     <li>
-                        <a href="/category.php/<?=$category->category?>" class="d-flex justify-content-between">
+                        <a href="category.php?c=<?=$category->category?>" class="d-flex justify-content-between">
                         <p><?=ucfirst($category->category)?></p>
                         <!-- <p>59</p> -->
                         </a>

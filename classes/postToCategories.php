@@ -24,6 +24,16 @@
             $postToCategories = $stmt->fetchAll(); // Lấy ra cái đối tượng
             return $postToCategories;
         }
+        // get postToCategories by categoryID
+        public static function getPostToCategoriesByCategoryID($categoryID, $conn){
+            $sql = "select * from posttocategories where categoryID=:categoryID";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':categoryID', $categoryID, PDO::PARAM_STR);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'PostToCategories'); //Trả về 1 đổi tượng
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $postToCategories = $stmt->fetchAll(); // Lấy ra cái đối tượng
+            return $postToCategories;
+        }
         public function addPostToCategories($conn){
             if($this->validate()){  
                 //Tạo câu lệnh insert chống SQL injection

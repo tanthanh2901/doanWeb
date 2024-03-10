@@ -34,7 +34,7 @@
 
         <div class="d-flex justify-content-between mt-20">
             <div>
-                <a href="#" class="blog-post-btn">
+                <a href="blog-single.php?p=<?=$post->id?>" class="blog-post-btn">
                 Read More <span class="ti-arrow-right"></span>
                 </a>
             </div>

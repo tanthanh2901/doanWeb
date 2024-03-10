@@ -9,7 +9,7 @@
         public $date;
 
         public function __construct($id=null, $postTitle='', $postContentID='', $postImg='', $stateID='', $userID='', $date='') {
-            if($postTitle!='' && $postContentID='' && $stateID='' && $userID='' && $date != ''){
+            if($postTitle!='' && $postContentID!='' && $stateID!='' && $userID!='' && $date != ''){
                 $this->id = $id;
                 $this->postTitle = $postTitle;
                 $this->postContentID = $postContentID;
@@ -46,15 +46,17 @@
             $states = $stmt->fetch(); // Lấy ra cái đối tượng
             return $states;
         }
-        // get post by categoryID
-        public static function getPostsByCategoryID($categoryID, $stateID, $conn){
-            $sql = "select * from posts where categoryID=:categoryID AND stateID=:stateID";
+        // get categories by ids
+        public static function getPosts($postIDs, $conn){
+            $placeholders = implode(',', array_fill(0, count($postIDs), '?'));
+            $sql = "SELECT * FROM posts WHERE id IN ($placeholders)";
             $stmt = $conn->prepare($sql);
-            $stmt->bindValue(':stateID', $stateID, PDO::PARAM_STR);
-            $stmt->bindValue(':categoryID', $categoryID, PDO::PARAM_STR);
-            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post'); //Trả về 1 đổi tượng
-            $stmt->execute(); // Thực hiện câu lệnh sql
-            $states = $stmt->fetch(); // Lấy ra cái đối tượng
+            foreach ($postIDs as $index => $category) {
+                $stmt->bindValue($index + 1, $category, PDO::PARAM_STR);
+            }
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post');
+            $stmt->execute();
+            $states = $stmt->fetchAll();
             return $states;
         }
         // add post 

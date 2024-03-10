@@ -2,10 +2,13 @@
   require "./inc/init.php";
   require "./classes/auth.php";
 
+  $requestParam = $_GET['c'];
+  
   $conn = require "./inc/db.php";
   $categories = Category::getAllCategories($conn);
   $state = State::getPublicState($conn);
-  $posts = Post::getAllPosts($state->id, $conn);
+  $posts = PostInfo::getPostsByCategory($requestParam, $state->id, $conn);
+
 ?>
 <?php require "inc/header.php"; ?>
 
