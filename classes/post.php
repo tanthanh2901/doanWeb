@@ -59,6 +59,18 @@
             $states = $stmt->fetchAll();
             return $states;
         }
+
+        // search posts
+        public static function searchPosts($postTitle, $conn){
+            $sql = "select * from posts where postTitle like '%:postTitle%' AND stateID=2";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':postTitle', $postTitle, PDO::PARAM_STR);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post'); //Trả về 1 đổi tượng
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $states = $stmt->fetchAll(); // Lấy ra cái đối tượng
+            return $states;
+        }
+
         // add post 
         public function addPost($conn){
             if($this->validate()){  

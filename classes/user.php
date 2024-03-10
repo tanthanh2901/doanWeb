@@ -34,20 +34,20 @@
                 return password_verify($password, $hash);
             }
         }
-        // // get user
-        // public static function getUser($conn, $id){
-        //     $sql = "
-        //         select username from users
-        //         where id=:id;
-        //     ";
-        //     $stmt = $conn->prepare($sql);
-        //     $stmt->bindValue(':id', $id, PDO::PARAM_STR);
-        //     $stmt->setFetchMode(PDO::FETCH_CLASS, 'User');
-        //     $stmt->execute();
-        //     $user = $stmt->fetch();
+        // get user
+        public static function getUser($conn, $id){
+            $sql = "
+                select username from users
+                where id=:id;
+            ";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'User');
+            $stmt->execute();
+            $user = $stmt->fetch();
 
-        //     return $user;
-        // }
+            return $user;
+        }
         // Thêm phương thức adduser
         public function addUser($conn){
             if($this->validate()){  

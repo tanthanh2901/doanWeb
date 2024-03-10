@@ -60,3 +60,7 @@
   .left-topbar-item:first-child:before {
     display: none;
   }
+
+  .blog-details-content img{
+    max-width: 680px;
+  }

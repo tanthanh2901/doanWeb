@@ -11,19 +11,19 @@
 <div class="single-amenities">
     <div class="amenities-thumb">
         <img
-        class="img-fluid w-100"
-        src=<?=$post->postImg?>
-        alt=""
+            class="img-fluid w-100"
+            src=<?=$post->postImg?>
+            alt=""
         />
     </div>
     <div class="amenities-details">
         <h5>
-            <a href="#">
+            <a href="blog-single.php?p=<?=$post->id?>">
                 <?= $post->postTitle?>
             </a>
         </h5>
         <div class="amenities-meta mb-10">
-            <a href="#" class=""
+            <a href="blog-single.php?p=<?=$post->id?>" class=""
                 ><span class="ti-calendar"></span><?=$post->date?></a
             >
         </div>
@@ -39,7 +39,7 @@
                 </a>
             </div>
             <div class="category">
-                <a href="#">
+                <a href="blog-single.php?p=<?=$post->id?>">
                     <span class="ti-folder mr-1"></span> <?php
                         foreach($categoriesOfPost as $category){
                             echo $category->category;

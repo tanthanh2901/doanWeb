@@ -4,7 +4,8 @@
         <div class="single-sidebar-widget search-widget">
             <h4 class="category-title">Search</h4>
             <form class="search-form mt-20" action="#">
-                <input placeholder="Search Posts" name="search" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Posts'">
+                <input placeholder="Search Posts" name="search" type="text" 
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Posts'">
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>

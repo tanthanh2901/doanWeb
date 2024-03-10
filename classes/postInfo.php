@@ -21,7 +21,7 @@
                 $this->category = $category;
             }
         }
-
+        // get posts by category's name
         public static function getPostsByCategory($category, $stateID, $conn){
             $sql = "select * from postInfo where category=:category AND stateID=:stateID";
             $stmt = $conn->prepare($sql);
