@@ -2,6 +2,7 @@
   require "./inc/init.php";
   require "./classes/auth.php";
 
+  
   $requestParam = $_GET['c'];
   
   $conn = require "./inc/db.php";

@@ -62,8 +62,7 @@ class CategoryCheckBox extends HTMLElement{
         this.querySelector("#category-addtag").addEventListener('click', ()=>{
             const categoryCheckBox = document.getElementById('category-checkbox-dropdown');
             categoryCheckBox.classList.toggle('d-none');
-            console.log(categoryCheckBox)
-            console.log('vailoz')
+            // console.log(categoryCheckBox)
         });
 
 

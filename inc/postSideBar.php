@@ -1,15 +1,15 @@
 <!-- parameters: categories -->
 <div class="col-lg-4 sidebar-widgets">
     <div class="widget-wrap">
+        <!-- search -->
         <div class="single-sidebar-widget search-widget">
             <h4 class="category-title">Search</h4>
             <form class="search-form mt-20" action="#">
-                <input placeholder="Search Posts" name="search" type="text" 
-                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Posts'">
+                <search-dropdown/>
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>
-
+    <!-- categories -->
         <div class="single-sidebar-widget post-category-widget">
             <h4 class="category-title">Catgories</h4>
             <ul class="cat-list mt-20">

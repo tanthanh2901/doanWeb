@@ -287,6 +287,7 @@
       integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
       crossorigin="anonymous"
     ></script>
+    <script src="js/searchDropdown.js"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/jquery.sticky.js"></script>
@@ -301,5 +302,27 @@
     ></script>
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/main.js"></script>
+
+    <!-- <script>
+      let searchBar = document.getElementById('search-bar');
+      searchBar.addEventListener('keyup', (event)=>{
+        var query = event.target.value;
+        fetch('search.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'query=' + encodeURIComponent(query),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Display the search results
+            // You can modify this part based on how you want to display the results
+            console.log(data);
+        });
+      })
+    </script> -->
+
+
   </body>
 </html>
