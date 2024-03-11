@@ -6,7 +6,6 @@
   $categories = Category::getAllCategories($conn);
   $state = State::getPublicState($conn);
   $posts = Post::getAllPosts($state->id, $conn);
-  // vailoz 
 ?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
