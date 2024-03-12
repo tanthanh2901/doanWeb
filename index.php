@@ -242,7 +242,7 @@
           <div class="col-lg-8">
             <div class="row">
               <div class="col-lg-6 col-md-6">
-                <p class="h3 mb-2">Recommend Posts</p>
+                <p class="h3 mb-2">Recommended Posts</p>
               </div>
             </div>
             <!-- blog post -->
