@@ -21,6 +21,17 @@
                 $this->category = $category;
             }
         }
+
+        public static function getPostsByCategories($conn){
+            $sql = "select * from postinfo group by category, id;";
+            $stmt = $conn->prepare($sql);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'PostInfo'); //Trả về 1 đổi tượng
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $posts = $stmt->fetchAll(); // Lấy ra cái đối tượng
+            return $posts;
+        }
+
+
         // get posts by category's name
         public static function getPostsByCategory($category, $stateID, $conn){
             $sql = "select * from postInfo where category=:category AND stateID=:stateID";

@@ -31,7 +31,7 @@
        						<div class="user_details">
        							<div class="float-left">
 									<?php foreach($postDetail->category as $category):?>
-       									<a href="/category.php?c=<?=$category?>"><?=$category?></a>
+       									<a href="category.php?c=<?=$category?>"><?=$category?></a>
 									<?php endforeach;?>
        							</div>
 								<!-- user -->

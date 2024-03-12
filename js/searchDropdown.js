@@ -4,15 +4,12 @@ class SearchDropdown extends HTMLElement{
         let html = `
             <input placeholder="Search Posts" name="search" type="text" id="search-bar"
                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Posts'"
-                id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" autocomplete="false"
-            >
+                id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+                autocomplete="false">
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">  
-        `;
-
-        html += `
             </div>
+            <button type="submit"><i class="fa fa-search"></i></button>
         `;
-
         this.innerHTML = html;
     }
 

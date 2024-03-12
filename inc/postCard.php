@@ -41,9 +41,12 @@
             <div class="category">
                 <a href="blog-single.php?p=<?=$post->id?>">
                     <span class="ti-folder mr-1"></span> <?php
+                        $postCategories = '';
                         foreach($categoriesOfPost as $category){
-                            echo $category->category;
+                            $postCategories = $postCategories. $category->category.', ';
                         }
+                        $postCategories = substr($postCategories, 0, strlen($postCategories)-2);
+                        echo $postCategories;
                     ?>
                 </a>
             </div>

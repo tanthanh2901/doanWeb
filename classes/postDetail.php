@@ -41,5 +41,24 @@
             return $result;
         }
 
+        public function addPostDetail($conn){
+            //Tạo câu lệnh insert chống SQL injection
+            $sql = "
+                CALL insertPost(:postContent, :postTitle, :stateID, :userID, :postImg, :date, :categpryIDsText) 
+            ";
+            
+            $categories = json_encode($this->category);
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':postTitle', $this->title, PDO::PARAM_STR);
+            $stmt->bindValue(':postContent', $this->content, PDO::PARAM_STR);
+            $stmt->bindValue(':postImg', $this->img, PDO::PARAM_STR);
+            $stmt->bindValue(':stateID', $this->stateID, PDO::PARAM_STR);
+            $stmt->bindValue(':userID', $this->userID, PDO::PARAM_STR);
+            $stmt->bindValue(':date', $this->date, PDO::PARAM_STR);
+            $stmt->bindValue(':categpryIDsText', $categories, PDO::PARAM_STR);
+            return $stmt->execute();
+        }
+
     }
 ?>

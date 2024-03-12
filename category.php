@@ -1,14 +1,29 @@
 <?php 
   require "./inc/init.php";
   require "./classes/auth.php";
-
-  
-  $requestParam = $_GET['c'];
   
   $conn = require "./inc/db.php";
   $categories = Category::getAllCategories($conn);
-  $state = State::getPublicState($conn);
-  $posts = PostInfo::getPostsByCategory($requestParam, $state->id, $conn);
+  if(isset($_GET['c']) && !empty($_GET['c'])){
+    $requestParam = $_GET['c'];
+    $state = State::getPublicState($conn);
+    $posts = PostInfo::getPostsByCategory($requestParam, $state->id, $conn);
+  }else{
+    // $repo;
+    // $postPerCategory;
+    // $posts = array();
+    // $postsArr = PostInfo::getPostsByCategories($conn);
+    // foreach($postsArr as $post){
+    //   if(count($repo)>0){
+    //     if($post->category != $repo[count($repo)-1]->category){
+          
+    //     }else{
+    //       $repo[count($repo)-1][] = $post;
+    //     }
+    //   }
+    // }
+  }
+  
 
 ?>
 <?php require "inc/header.php"; ?>
@@ -27,41 +42,54 @@
     <section class="blog-post-area section-gap relative">
       <div class="container">
         <div class="row">
-          <div class="col-lg-8">
-            <div class="row">
-              <!-- blog card left -->
-              <div class="col-lg-6 col-md-6">
-                <?php
-                  $start = 0;$end= (count($posts)+1)/2;
-                  $postsHalfTop = array_slice($posts, $start, $end);
-                  foreach($postsHalfTop as $post){
-                    require './inc/postCard.php';
-                  }
-                ?>
+            <?php if(isset($_GET['c']) && !empty($_GET['c'])):?>
+            <div class="col-lg-8">
+              <div class="row">
+                <!-- blog card left -->
+                <div class="col-lg-6 col-md-6">
+                  <?php
+                    $start = 0;$end= (count($posts)+1)/2;
+                    $postsHalfTop = array_slice($posts, $start, $end);
+                    foreach($postsHalfTop as $post){
+                      require './inc/postCard.php';
+                    }
+                  ?>
+                </div>
+                <!-- blog card right -->
+                <div class="col-lg-6 col-md-6">
+                  <?php 
+                    $start = (count($posts)+1)/2;$end= count($posts);
+                    $postsHalfTop = array_slice($posts, $start, $end);
+                    foreach($postsHalfTop as $post){
+                      require './inc/postCard.php';
+                    }
+                  ?>
+                </div>
               </div>
-              <!-- blog card right -->
-              <div class="col-lg-6 col-md-6">
-                <?php 
-                  $start = (count($posts)+1)/2;$end= count($posts);
-                  $postsHalfTop = array_slice($posts, $start, $end);
-                  foreach($postsHalfTop as $post){
-                    require './inc/postCard.php';
-                  }
-                ?>
+  
+              <div class="row">
+                <div class="col-lg-12">
+                    <?php require './inc/pagination.php';?>
+                </div>
               </div>
             </div>
+            <?php else:?>
+              <div class="col-lg-8">
+                
+                <div class="row">
+                  <div class="col-lg-6 col-md-6">
+                    
+                  </div>
+                </div>
+              </div>
+            <?php endif;?>
 
-            <div class="row">
-              <div class="col-lg-12">
-                  <?php require './inc/pagination.php';?>
-              </div>
-            </div>
+            <!-- Start Blog Post Siddebar -->
+            <?php require './inc/postSideBar.php';?>
+            <!-- End Blog Post Siddebar -->
           </div>
 
-          <!-- Start Blog Post Siddebar -->
-          <?php require './inc/postSideBar.php';?>
-          <!-- End Blog Post Siddebar -->
-        </div>
+
       </div>
     </section>
     <!--================ End Blog Post Area =================-->
@@ -87,5 +115,6 @@
     ></script>
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/searchDropdown.js"></script>
   </body>
 </html>
