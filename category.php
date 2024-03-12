@@ -4,10 +4,18 @@
   
   $conn = require "./inc/db.php";
   $categories = Category::getAllCategories($conn);
+
+  if(isset($_GET['page']) && !empty($_GET['page'])){
+    $page = intval($_GET['page']);
+  }else $page = 0;
+
   if(isset($_GET['c']) && !empty($_GET['c'])){
     $requestParam = $_GET['c'];
     $state = State::getPublicState($conn);
-    $posts = PostInfo::getPostsByCategory($requestParam, $state->id, $conn);
+    $postsPageable = PostInfo::getPostsByCategory($requestParam, $state->id, $page, $conn);
+  
+    $posts = $postsPageable->content;
+    $totalPages = $postsPageable->totalPages;
   }else{
     // $repo;
     // $postPerCategory;

@@ -5,7 +5,24 @@
   $conn = require "./inc/db.php";
   $categories = Category::getAllCategories($conn);
   $state = State::getPublicState($conn);
-  $posts = Post::getAllPosts($state->id, $conn);
+
+  if(isset($_GET['page']) && !empty($_GET['page'])){
+    $page = intval($_GET['page']);
+  }else $page = 0;
+  
+  if(isset($_GET['search']) && !empty($_GET['search'])){
+    $requestParam = $_GET['search'];
+    $state = State::getPublicState($conn);
+    $postsPageable = Post::searchPosts($requestParam, $state->id, $page, $conn);
+    $posts = $postsPageable->content;
+    $totalPages = $postsPageable->totalPages;
+  }else{
+    $postsPageable = Post::getAllPosts($state->id, $page, $conn);
+    $posts = $postsPageable->content;
+    $totalPages = $postsPageable->totalPages;
+  }
+
+
 ?>
 <?php require "inc/header.php"; ?>
     <!--================ Start banner Area =================-->

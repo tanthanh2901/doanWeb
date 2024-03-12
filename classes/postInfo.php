@@ -33,15 +33,27 @@
 
 
         // get posts by category's name
-        public static function getPostsByCategory($category, $stateID, $conn){
-            $sql = "select * from postInfo where category=:category AND stateID=:stateID";
+        public static function getPostsByCategory($category, $stateID, $pageNumber, $conn){
+            $sql = "
+                select * from postInfo 
+                where category=:category AND stateID=:stateID
+                limit :pageSize offset :pageNumber";
             $stmt = $conn->prepare($sql);
             $stmt->bindValue(':stateID', $stateID, PDO::PARAM_STR);
             $stmt->bindValue(':category', $category, PDO::PARAM_STR);
+            $stmt->bindValue(':pageSize', PAGE_SIZE, PDO::PARAM_INT);
+            $stmt->bindValue(':pageNumber', $pageNumber*PAGE_SIZE, PDO::PARAM_INT);
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'PostInfo'); //Trả về 1 đổi tượng
             $stmt->execute(); // Thực hiện câu lệnh sql
-            $states = $stmt->fetchAll(); // Lấy ra cái đối tượng
-            return $states;
+            $posts = $stmt->fetchAll(); // Lấy ra cái đối tượng
+
+            // pageable
+            
+            $condition = "where category='$category' AND stateID=$stateID";
+            $totalPages = Pageable::getTotalPages('postInfo', $condition, $conn);
+            $pageable = new Pageable(false, false, $posts, $totalPages, $pageNumber);
+
+            return $pageable;
         }
     }
 

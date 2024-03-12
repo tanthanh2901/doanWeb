@@ -3,6 +3,8 @@
     $conn = require './inc/db.php';
 
     $query = $_POST['query'];
-    $posts = Post::searchPosts($query, $conn);
+    $state = State::getPublicState($conn);
+    $postsPageable = Post::searchPosts($query, $state->id, 0, $conn);
+    $posts = $postsPageable->content;
     echo json_encode($posts);
 ?>

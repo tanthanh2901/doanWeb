@@ -5,7 +5,7 @@
   $conn = require "./inc/db.php";
   $categories = Category::getAllCategories($conn);
   $state = State::getPublicState($conn);
-  $posts = Post::getAllPosts($state->id, $conn);
+  $posts = Post::getPostsRandomly($state->id, $conn);
 ?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
@@ -240,6 +240,11 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8">
+            <div class="row">
+              <div class="col-lg-6 col-md-6">
+                <p class="h3 mb-2">Recommend Posts</p>
+              </div>
+            </div>
             <!-- blog post -->
             <div class="row">
               <!-- blog card left -->
@@ -265,8 +270,8 @@
             </div>
             <!-- pagination -->
             <div class="row">
-              <div class="col-lg-12">
-                  <?php require './inc/pagination.php';?>
+              <div class="col-lg-12 d-flex justify-content-center">
+                <a class="btn btn-secondary" href="archive.php">More posts</a>
               </div>
             </div>
           </div>

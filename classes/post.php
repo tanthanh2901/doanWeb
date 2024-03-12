@@ -26,14 +26,31 @@
             return $rs;
         }
         //get all posts
-        public static function getAllPosts($stateID, $conn){
-            $sql = "select * from posts where stateID=:stateID";
+        public static function getAllPosts($stateID, $pageNumber,$conn){
+            $sql = "SELECT * from posts where stateID=:stateID limit :pageSize offset :pageNumber";
             $stmt = $conn->prepare($sql);
             $stmt->bindValue(':stateID', $stateID, PDO::PARAM_STR);
+            $stmt->bindValue(':pageSize', PAGE_SIZE, PDO::PARAM_INT);
+            $stmt->bindValue(':pageNumber', $pageNumber*PAGE_SIZE, PDO::PARAM_INT);
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post'); //Trả về 1 đổi tượng
             $stmt->execute(); // Thực hiện câu lệnh sql
-            $states = $stmt->fetchAll(); // Lấy ra cái đối tượng
-            return $states;
+            $posts = $stmt->fetchAll(); // Lấy ra cái đối tượng
+            // pageable
+            $totalPages = Pageable::getTotalPages('posts', 'where stateID='.$stateID, $conn);
+            $pageable = new Pageable(false, false, $posts, $totalPages, $pageNumber);
+
+            return $pageable;
+        }
+
+        //get total pages
+        public static function getTotalPages($conn){
+            $sql = "SELECT ceil(count(*)/:pageSize) AS totalPages from posts";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':pageSize', PAGE_SIZE, PDO::PARAM_INT);
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $totalPages = $stmt->fetch(); // Lấy ra cái đối tượng
+            return $totalPages;
         }
         // get post by id
         public static function getPost($postID, $stateID, $conn){
@@ -43,10 +60,10 @@
             $stmt->bindValue(':postID', $postID, PDO::PARAM_STR);
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post'); //Trả về 1 đổi tượng
             $stmt->execute(); // Thực hiện câu lệnh sql
-            $states = $stmt->fetch(); // Lấy ra cái đối tượng
-            return $states;
+            $posts = $stmt->fetch(); // Lấy ra cái đối tượng
+            return $posts;
         }
-        // get categories by ids
+        // get posts by ids
         public static function getPosts($postIDs, $conn){
             $placeholders = implode(',', array_fill(0, count($postIDs), '?'));
             $sql = "SELECT * FROM posts WHERE id IN ($placeholders)";
@@ -56,19 +73,49 @@
             }
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post');
             $stmt->execute();
-            $states = $stmt->fetchAll();
-            return $states;
+            $posts = $stmt->fetchAll();
+            return $posts;
+        }
+
+        // get random entities
+        public static function getPostsRandomly($stateID, $conn){
+            $sql = "
+                SELECT * FROM posts
+                WHERE stateID=:stateID
+                ORDER BY RAND()
+                LIMIT 4;
+            ";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':stateID', $stateID, PDO::PARAM_INT);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post');
+            $stmt->execute();
+            $posts = $stmt->fetchAll();
+            return $posts;
         }
 
         // search posts
-        public static function searchPosts($postTitle, $conn){
-            $sql = "select * from posts where postTitle like :postTitle";
+        public static function searchPosts($postTitle, $stateID, $pageNumber,$conn){
+            $sql = "
+                select * from posts 
+                where postTitle like :postTitle and stateID=:stateID
+                limit :pageSize offset :pageNumber
+            ";
+
             $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':pageSize', PAGE_SIZE, PDO::PARAM_INT);
+            $stmt->bindValue(':pageNumber', $pageNumber*PAGE_SIZE, PDO::PARAM_INT);
             $stmt->bindValue(':postTitle', '%'.$postTitle.'%', PDO::PARAM_STR);
+            $stmt->bindValue(':stateID', $stateID, PDO::PARAM_STR);
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post'); //Trả về 1 đổi tượng
             $stmt->execute(); // Thực hiện câu lệnh sql
-            $states = $stmt->fetchAll(); // Lấy ra cái đối tượng
-            return $states;
+            $posts = $stmt->fetchAll(); // Lấy ra cái đối tượng
+
+            // pageable
+            $condition = "where postTitle like '%$postTitle%' and stateID=$stateID";
+            $totalPages = Pageable::getTotalPages('posts', $condition, $conn);
+            $pageable = new Pageable(false, false, $posts, $totalPages, $pageNumber);
+
+            return $pageable;
         }
 
         // add post 
