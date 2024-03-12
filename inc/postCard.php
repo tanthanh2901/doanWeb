@@ -12,7 +12,11 @@
     <div class="amenities-thumb">
         <img
             class="img-fluid w-100"
-            src=<?=$post->postImg?>
+            src=<?php
+                $img = $post->postImg;
+                $img = $img!=null? $img: 'asset/images/defaultImage.png';
+                echo $img;
+            ?>
             alt=""
         />
     </div>
