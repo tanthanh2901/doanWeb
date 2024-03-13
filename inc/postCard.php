@@ -22,7 +22,7 @@
                 class="img-fluid w-100"
                 src=<?php
                     $img = $post->postImg;
-                    $img = $img!=null? $img: 'asset/images/defaultImage.png';
+                    $img = $img!=null? $img: 'img/blog-post/defaultImage.png';
                     echo $img;
                 ?>
                 alt=""
