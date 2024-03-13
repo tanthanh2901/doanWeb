@@ -61,7 +61,7 @@
                     <h1>Error !</h1>
                     <p>Your post can not be updated </p>
                 <?php endif;?>
-                <a href="userDashBoard.php" class="btn btn-primary">Back Home</a>
+                <a href="index.php" class="btn btn-primary">Back Home</a>
             </div>
         </div>
     </div>

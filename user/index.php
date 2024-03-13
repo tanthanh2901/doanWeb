@@ -3,7 +3,6 @@
   $conn = require '../inc/db.php';
   $user = User::getUser($conn, 1);
 
-
   $postHref = 'postEditor.php';
 
   $totalPosts = Post::getTotalPosts(1, $conn);
