@@ -203,7 +203,7 @@
                             </form>
                         </div> -->
 					</div>
-					
+					<!-- sidebar -->
                     <?php require './inc/postSideBar.php';?>
                 </div>
             </div>
@@ -232,5 +232,6 @@
 	  ></script>
 	  <script src="js/bootstrap-datepicker.js"></script>
 	  <script src="js/main.js"></script>
+      <script src="js/searchDropdown.js"></script>
 	</body>
   </html>

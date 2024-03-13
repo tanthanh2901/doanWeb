@@ -1,5 +1,9 @@
-<!-- parameters: $post -->
+<!-- parameters: $post, $postHref-->
 <?php
+    if(!isset($postHref)){
+        $postHref = 'blog-single.php';
+    }
+
     $categoryIDsOfPost = PostToCategories::getPostToCategories($post->id, $conn);
     $categoryIDs = array();
     foreach($categoryIDsOfPost as $cat) {
@@ -9,51 +13,51 @@
 
 ?>
 <div class="single-amenities">
-    <div class="amenities-thumb">
-        <img
-            class="img-fluid w-100"
-            src=<?php
-                $img = $post->postImg;
-                $img = $img!=null? $img: 'asset/images/defaultImage.png';
-                echo $img;
-            ?>
-            alt=""
-        />
-    </div>
-    <div class="amenities-details">
-        <h5>
-            <a href="blog-single.php?p=<?=$post->id?>">
+    <a href=<?=$postHref.'?p='.$post->id?>>
+        <div class="amenities-thumb">
+            <img
+                class="img-fluid w-100"
+                src=<?php
+                    $img = $post->postImg;
+                    $img = $img!=null? $img: 'asset/images/defaultImage.png';
+                    echo $img;
+                ?>
+                alt=""
+            />
+        </div>
+        <div class="amenities-details">
+            <h5>
                 <?= $post->postTitle?>
-            </a>
-        </h5>
-        <div class="amenities-meta mb-10">
-            <a href="blog-single.php?p=<?=$post->id?>" class=""
-                ><span class="ti-calendar"></span><?=$post->date?></a
-            >
-        </div>
-        <!-- <p>
-        Creepeth green light appear let rule only you're divide
-        and lights moving and isn't given creeping deep.
-        </p> -->
-
-        <div class="d-flex justify-content-between mt-20">
-            <div>
-                <a href="blog-single.php?p=<?=$post->id?>" class="blog-post-btn">
-                Read More <span class="ti-arrow-right"></span>
+            </h5>
+            <div class="amenities-meta mb-10">
+                <a class="">
+                    <span class="ti-calendar"></span><?=$post->date?>
                 </a>
             </div>
-            <div class="category">
-                <a href="blog-single.php?p=<?=$post->id?>">
-                    <span class="ti-folder mr-1"></span> <?php
-                        $postCategories = '';
-                        foreach($categoriesOfPost as $category){
-                            $postCategories = $postCategories. $category->category.', ';
-                        }
-                        $postCategories = substr($postCategories, 0, strlen($postCategories)-2);
-                        echo $postCategories;
-                    ?>
-                </a>
+            <!-- <p>
+            Creepeth green light appear let rule only you're divide
+            and lights moving and isn't given creeping deep.
+            </p> -->
+    
+            <div class="d-flex justify-content-between mt-20">
+                <div>
+                    <a class="blog-post-btn">
+                    Read More <span class="ti-arrow-right"></span>
+                    </a>
+                </div>
+                <div class="category">
+                    <a>
+                        <span class="ti-folder mr-1"></span> <?php
+                            $postCategories = '';
+                            foreach($categoriesOfPost as $category){
+                                $postCategories = $postCategories. $category->category.', ';
+                            }
+                            $postCategories = substr($postCategories, 0, strlen($postCategories)-2);
+                            echo $postCategories;
+                        ?>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
+    </a>
 </div>

@@ -4,11 +4,10 @@
         public $stateValue;
         public $stateName;
 
-        public function __construct($id =null, $stateName='', $stateValue='') {
-            if($stateName!='' && $stateValue !=""){
+        public function __construct($id =null, $stateName='') {
+            if($stateName!=''){
                 $this->id = $id;
                 $this->stateName = $stateName;
-                $this->stateValue = $stateValue;
             }
         }
         public function getStateName(){
@@ -23,6 +22,17 @@
             $states = $stmt->fetchAll(); // Lấy ra cái đối tượng
             return $states;
         }
+        // get state by id
+        public static function getState($stateID, $conn){
+            $sql = "select * from states where id = :stateID";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':stateID', $stateID, PDO::PARAM_INT);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'State'); //Trả về 1 đổi tượng
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $states = $stmt->fetch(); // Lấy ra cái đối tượng
+            return $states;
+        }
+
         public static function getPublicState($conn){
             $sql = "select * from states where stateName = 'PUBLIC'";
             $stmt = $conn->prepare($sql);

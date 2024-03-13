@@ -576,6 +576,10 @@ function validate(writingArea){
 
   return context;
 }
+// remove white spaces among html code 
+function minifyHTML(html) {
+  return html.replace(/\s+/g, ' ').trim();
+}
 // submit form
 textEditorForm.addEventListener('submit', (event)=>{
   event.preventDefault();
@@ -585,6 +589,7 @@ textEditorForm.addEventListener('submit', (event)=>{
   // var imgPropertiesEle = writingArea.querySelectorAll('img-properties');
   // imgPropertiesEle.forEach(ele => ele.remove());
   var result = validate(writingArea);
+  var result = minifyHTML(result);
 
   var form = document.createElement('form');
   form.method=textEditorForm.method;

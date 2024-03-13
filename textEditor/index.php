@@ -1,14 +1,15 @@
 <?php
-    require '../config.php';
-    require '../classes/database.php';
-    require '../classes/state.php';
-    require '../classes/category.php';
-    require '../classes/user.php';
+    require '../inc/init.php';
+    // require '../config.php';
+    // require '../classes/database.php';
+    // require '../classes/state.php';
+    // require '../classes/category.php';
+    // require '../classes/user.php';
 
     $conn = require '../inc/db.php';
     $states = State::getAllStates($conn);
     $categories = Category::getAllCategories($conn);
-    $user = new User('happy123', 'happy123');
+    $user = User::getUser($conn, 1);
 
 ?>
 <!DOCTYPE html>

@@ -42,16 +42,31 @@
             return $pageable;
         }
 
-        //get total pages
-        public static function getTotalPages($conn){
-            $sql = "SELECT ceil(count(*)/:pageSize) AS totalPages from posts";
+        public static function getTotalPosts($userID, $conn){
+            $sql = "SELECT count(*) as totalPosts from posts where userID=:userID";
             $stmt = $conn->prepare($sql);
-            $stmt->bindValue(':pageSize', PAGE_SIZE, PDO::PARAM_INT);
-            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $stmt->bindValue(':userID', $userID, PDO::PARAM_INT);
+            $stmt->setFetchMode(PDO::FETCH_ASSOC); //Trả về 1 đổi tượng
             $stmt->execute(); // Thực hiện câu lệnh sql
-            $totalPages = $stmt->fetch(); // Lấy ra cái đối tượng
-            return $totalPages;
+            $result = $stmt->fetch(); // Lấy ra cái đối tượng
+            
+            return $result['totalPosts'];
         }
+        public static function getTotalPostsPerState($userID, $conn){
+            $sql = "
+                SELECT s.stateName, count(p.id) as total 
+                from posts p join states s on p.stateID=s.id 
+                WHERE p.userID=:userID
+                group by s.id;";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':userID', $userID, PDO::PARAM_INT);
+            $stmt->setFetchMode(PDO::FETCH_ASSOC); //Trả về 1 đổi tượng
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $result = $stmt->fetch(); // Lấy ra cái đối tượng
+            
+            return $result;
+        }
+
         // get post by id
         public static function getPost($postID, $stateID, $conn){
             $sql = "select * from posts where id=:postID AND stateID=:stateID";
@@ -75,6 +90,30 @@
             $stmt->execute();
             $posts = $stmt->fetchAll();
             return $posts;
+        }
+
+        // get posts by userID
+        public static function getPostsByUserID($userID, $stateID, $pageNumber,$conn){
+            $sql = "
+                SELECT * FROM posts 
+                WHERE userID=:userID AND stateID=:stateID 
+                limit :pageSize offset :pageNumber
+            ";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':userID', $userID, PDO::PARAM_STR);
+            $stmt->bindValue(':stateID', $stateID, PDO::PARAM_STR);
+            $stmt->bindValue(':pageSize', PAGE_SIZE, PDO::PARAM_INT);
+            $stmt->bindValue(':pageNumber', $pageNumber*PAGE_SIZE, PDO::PARAM_INT);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post');
+            $stmt->execute();
+            $posts = $stmt->fetchAll();
+
+            // pageable
+            $condition = "WHERE userID=$userID AND stateID=$stateID";
+            $totalPages = Pageable::getTotalPages('posts', $condition, $conn);
+            $pageable = new Pageable(false, false, $posts, $totalPages, $pageNumber);
+
+            return $pageable;
         }
 
         // get random entities

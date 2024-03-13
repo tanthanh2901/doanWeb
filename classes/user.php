@@ -8,8 +8,9 @@
 
         //Constructor
 
-        public function __construct($username = '', $password = ''){
+        public function __construct($id= null, $username = '', $password = ''){
             if ($username != '' && $password != '') {
+                $this->id = $id;
                 $this->username = $username;
                 $this->password = $password;
             }
