@@ -2,6 +2,7 @@ class CategoryCheckBox extends HTMLElement{
     constructor(){
         super();
         let categories = JSON.parse(this.getAttribute('categories'));
+
         
         let html = `
             <div class="d-flex">

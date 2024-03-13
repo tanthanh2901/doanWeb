@@ -22,6 +22,24 @@
             }
         }
 
+        public static function getPostByID($postID, $conn){
+            $sql = "select * from postinfo where id=:postID;";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':postID', $postID, PDO::PARAM_INT);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'PostInfo'); //Trả về 1 đổi tượng
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $postInfo = $stmt->fetchAll(); // Lấy ra cái đối tượng
+
+            $result = $postInfo[0];
+            $categories = array();
+            foreach($postInfo as $postDetail){
+                $categories[] = $postDetail->category;
+            }
+            $result->category = $categories;
+
+            return $result;
+        }
+
         public static function getPostsByCategories($conn){
             $sql = "select * from postinfo group by category, id;";
             $stmt = $conn->prepare($sql);

@@ -4,12 +4,15 @@
         $postHref = 'blog-single.php';
     }
 
-    $categoryIDsOfPost = PostToCategories::getPostToCategories($post->id, $conn);
-    $categoryIDs = array();
-    foreach($categoryIDsOfPost as $cat) {
-        $categoryIDs[]= $cat->categoryID;
-    }
-    $categoriesOfPost = Category::getCategoriesByIDs($categoryIDs, $conn);
+    $postInfo = PostInfo::getPostByID($post->id, $conn);
+    $categoriesOfPost = $postInfo->category;
+
+    // $categoryIDsOfPost = PostToCategories::getPostToCategories($post->id, $conn);
+    // $categoryIDs = array();
+    // foreach($categoryIDsOfPost as $cat) {
+    //     $categoryIDs[]= $cat->categoryID;
+    // }
+    // $categoriesOfPost = Category::getCategoriesByIDs($categoryIDs, $conn);
 
 ?>
 <div class="single-amenities">
@@ -50,7 +53,7 @@
                         <span class="ti-folder mr-1"></span> <?php
                             $postCategories = '';
                             foreach($categoriesOfPost as $category){
-                                $postCategories = $postCategories. $category->category.', ';
+                                $postCategories = $postCategories. $category.', ';
                             }
                             $postCategories = substr($postCategories, 0, strlen($postCategories)-2);
                             echo $postCategories;

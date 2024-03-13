@@ -11,6 +11,13 @@
             $rs = $this->content != '';
             return $rs;
         }
+
+
+        public function setContent($content=''){
+            if($content!='')
+                $this->content=$content;
+        }
+
         // get postContent by Id
         public static function getPostContent($id, $conn){
             $sql = "select * from posts where id=:id";
@@ -38,5 +45,21 @@
                 return null;
             }
         }
+
+        public function updatePostContent($conn){
+            try {
+                //Tạo câu lệnh insert chống SQL injection
+                $sql = "update postcontent set content=:content where id=:id;";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindValue(":content", $this->content, PDO::PARAM_STR);
+                $stmt->bindValue(":id", $this->id, PDO::PARAM_INT);
+                return $stmt->execute();
+              } catch (PDOException $e) {
+                echo $e->getMessage();
+                return false;
+              }
+        }
+        
+
     }
 ?>

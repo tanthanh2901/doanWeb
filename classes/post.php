@@ -115,6 +115,16 @@
 
             return $pageable;
         }
+        public static function getPostByUserID($userID, $postID,$conn){
+            $sql = "select * from posts where id=:postID AND userID=:userID";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':userID', $userID, PDO::PARAM_STR);
+            $stmt->bindValue(':postID', $postID, PDO::PARAM_STR);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post'); //Trả về 1 đổi tượng
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $posts = $stmt->fetch(); // Lấy ra cái đối tượng
+            return $posts;
+        }
 
         // get random entities
         public static function getPostsRandomly($stateID, $conn){

@@ -4,7 +4,7 @@
   $user = User::getUser($conn, 1);
 
 
-  $postHref = '../blog-single.php';
+  $postHref = 'postEditor.php';
 
   $totalPosts = Post::getTotalPosts(1, $conn);
 
@@ -59,6 +59,7 @@
 
 </head>
 <body>
+    
     <section class="vh-100">
         <div class="container py-5 h-100">
             <div class="row">
@@ -143,7 +144,7 @@
                     </div>
                     <!-- categories -->
                     <div class="single-sidebar-widget post-category-widget">
-                        <h4 class="category-title">State</h4>
+                        <h4>State</h4>
                         <ul class="mt-20">
                           <?php foreach($states as $state):?>
                             <li class="filter-checkbox">

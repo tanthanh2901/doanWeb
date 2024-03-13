@@ -14,7 +14,7 @@ let formatButtons = document.querySelectorAll(".format");
 let scriptButtons = document.querySelectorAll(".script");
 let dynamicButtons = document.querySelectorAll('.dynamic-button');
 let orderButtons = document.querySelectorAll('.order-button');
-let textEditorForm = document.getElementById("text-editor");
+
 let nextButton = document.getElementById('next-button');
 let selectButtons = document.getElementsByClassName('select-button');
 let toggleModalButtons = document.querySelectorAll('.toggle-button');
@@ -23,6 +23,42 @@ let textEditorSubmit = document.getElementById('text-editor-submit');
 let modalOverlay = document.querySelector('.modal');
 let inputPostImage = document.getElementById('input-post-image');
 let postThumbnailImage = document.getElementById('post-thumbnail-image');
+
+
+
+// update post
+  let postContent = document.getElementById('text-input-hiden');
+
+  var lines = postContent.children;
+  Array.from(lines).forEach(line=>{
+      if(line.tagName!== 'H1'){
+          if(line.tagName !== 'DIV'){
+              var newLine = document.createElement('div');
+              newLine.classList.add("line");
+              newLine.setAttribute('contenteditable', 'true');
+              newLine.appendChild(line);
+  
+              writingArea.appendChild(newLine);
+          }
+          else{
+              line.classList.add('line');
+              line.setAttribute('contenteditable', true);
+  
+              writingArea.appendChild(line);
+          }
+      }
+      else{
+          line.setAttribute('contenteditable', 'true');
+          writingArea.appendChild(line);
+      }
+  })
+
+
+
+
+
+
+
 
 
 
@@ -523,114 +559,7 @@ writingArea.addEventListener('paste', (event)=>{
     }
   }
 });
-// submit event
-// 
-async function filterElement(line){
-  const childEle = line.firstChild;
-  if(childEle){
-    // first child's tagname
-    const tagName = childEle.tagName;
-    if(!tagName){
-      // text inside
-      var div = document.createElement('div');
-      if(line.style.cssText.length>0)
-        div.style.cssText = line.style.cssText;
-      div.innerHTML = line.innerHTML;
-      line.replaceWith(div);
-    }else{
-      // text style inside
-      if(tagName === 'B' || tagName === 'U' || tagName === 'I' || 
-        tagName === 'SUB' || tagName === 'SUP' || tagName ==='FONT'){
 
-        var div = document.createElement('div');
-        if(line.style.cssText.length>0)
-        div.style.cssText = line.style.cssText;
-        div.innerHTML = line.innerHTML;
-        line.replaceWith(div);
-      }
-      else{ 
-        // other elements inside like img, ul, ol,...
-        line.replaceWith(childEle)
-      }
-    }
-  }else { 
-    // no element or text inside - br
-    var br = document.createElement('br');
-    line.replaceWith(br);
-  }
-  return line;
-}
-function validate(writingArea){
-
-  const lines = writingArea.querySelectorAll('div.line');
-
-  lines.forEach((line) =>{
-    line =filterElement(line);
-  })
-  var context = writingArea.innerHTML;
-  context = context.replaceAll('contenteditable="true"', '');
-  context = context.replaceAll('line--selected', '');
-  context = context.replaceAll('data-placeholder="Enter text here"', '');
-  context = context.replaceAll('img--selected"', '');
-  context = context.replaceAll('id="null"', '');
-
-  return context;
-}
-// remove white spaces among html code 
-function minifyHTML(html) {
-  return html.replace(/\s+/g, ' ').trim();
-}
-// submit form
-textEditorForm.addEventListener('submit', (event)=>{
-  event.preventDefault();
-  // 
-  var title = writingArea.querySelector("h1.title").innerHTML;
-  // creating a new form
-  // var imgPropertiesEle = writingArea.querySelectorAll('img-properties');
-  // imgPropertiesEle.forEach(ele => ele.remove());
-  var result = validate(writingArea);
-  var result = minifyHTML(result);
-
-  var form = document.createElement('form');
-  form.method=textEditorForm.method;
-  form.action=textEditorForm.action;
-
-  // post title
-  var inputTitle = document.createElement('input');
-  inputTitle.name = 'postTitle';
-  inputTitle.value = title;
-  form.appendChild(inputTitle);
-  // post content 
-  var inputContent = document.createElement('input');
-  inputContent.name = 'postContent';
-  inputContent.value = result;
-  form.appendChild(inputContent);
-  // post image 
-  var inputImage = document.createElement('input');
-  inputImage.name = 'postImg';
-  inputImage.value = imageUrl;
-  form.appendChild(inputImage);
-  // state
-  const state = textEditorForm.querySelector('#state-selector').value;
-  var inputState = document.createElement('input');
-  inputState.name = 'state';
-  inputState.value = state;
-  form.appendChild(inputState);
-  // categories
-  const categories = [];
-  const categoryInputs = textEditorForm.querySelectorAll('.category-check-input:checked');
-  categoryInputs.forEach((category) => {
-    categories.push(category.value);
-  });
-  var inputCategory = document.createElement('input');
-  inputCategory.name = 'categories';
-  inputCategory.value = categories;
-  form.appendChild(inputCategory);
-
-  // submit
-  document.body.appendChild(form);
-  form.submit();
-})
 // hidden button
 hiddenButtons.forEach((button) =>{
   // console.log(button)

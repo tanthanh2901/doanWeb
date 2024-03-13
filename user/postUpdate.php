@@ -1,18 +1,22 @@
 <?php
     require '../inc/init.php';
-
     $conn = require '../inc/db.php';
+
+    $userID = 1;
+
+    $user = User::getUser($conn, $userID);
+    $postId = $_POST['postID'];
+    $content = $_POST['postContent'];
     $postImg = $_POST['postImg'];
-    $postContent = $_POST['postContent'];
     $postTitle = $_POST['postTitle'];
     $stateID = $_POST['state'];
     $categories = $_POST['categories'];
-    $userID = 1;
     $categoriesArray = explode(',', $categories);
-    date_default_timezone_set('Asia/Ho_Chi_Minh'); // Set the timezone
-    $currentDate = date('Y-m-d H:i:s'); // Output the current date and time in the 'Y-m-d H:i:s' format  
 
-    // save post infomation
+    // $post = Post::getPostByUserID($userID, $postId, $conn);
+    $postDetail = PostDetail::getPostDetailByUserID($postId, $userID, $conn);
+
+    // get categories
     $categoryIDs = array();
     $fetchedCategories = Category::getCategories($categoriesArray, $conn);
     foreach($fetchedCategories as $fetchedCategory){
@@ -20,8 +24,14 @@
     }
 
     $categoryIDsStr = array_map('strval', $categoryIDs);
-    $postDetail = new PostDetail($postTitle, $postContent, $categoryIDsStr, $stateID, $userID, $currentDate, $postImg);
-    $state = $postDetail->addPostDetail($conn);
+
+    $postDetail->content = $content ?? $postDetail->content;
+    $postDetail->title = $postTitle ?? $postDetail->title;
+    $postDetail->img = $postImg ?? $postDetail->img;
+    $postDetail->stateID = $stateID ?? $postDetail->stateID;
+    $postDetail->category = $categoryIDsStr;
+
+    $state = $postDetail->updatePostDetail($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,12 +56,12 @@
             <div class="text-center">
                 <?php if($state):?>
                     <h1>Thank You !</h1>
-                    <p>Your post has been uploaded </p>
+                    <p>Your post has been updated </p>
                 <?php else:?>
                     <h1>Error !</h1>
-                    <p>Your post can not be uploaded </p>
+                    <p>Your post can not be updated </p>
                 <?php endif;?>
-                <a href="index.php" class="btn btn-primary">Back Home</a>
+                <a href="userDashBoard.php" class="btn btn-primary">Back Home</a>
             </div>
         </div>
     </div>
