@@ -97,18 +97,37 @@
                       <a class="dropdown-item" href="elements.php">Elements</a>
                     </div>
                   </li> -->
-                  <li class="nav-item">
+                  <!-- <li class="nav-item">
                     <a class="nav-link" href="elements.php">Elements</a>
-                  </li>
+                  </li> -->
+                  <?php
+                  if(Auth::isLoggedIn()){
+                    echo '<li class="nav-item">' 
+                    .'<a class="nav-link" href="./textEditor/index.php">Viết bài</a>'.
+                    '</li>';
+                  }
+                  ?>
+                  
                   <li class="nav-item">
                     <a class="nav-link" href="blog-single.php">Blog Detail</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="contact.php">Contact</a>
-                  </li>
                   <!-- <li class="nav-item">
-                    <a class="nav-link" >Login</a>
+                    <a class="nav-link" href="contact.php">Contact</a>
                   </li> -->
+                  <?php
+                  if(Auth::isLoggedIn()){
+                    echo '<li class="nav-item">'
+                        .' <a class="nav-link" href="logout.php">Logout</a>'.
+                    '</li>';
+                  } else {
+                      echo '<li class="nav-item">'
+                          .' <a class="nav-link" href="login.php">Login</a>'.
+                      '</li>';
+                  }
+                
+                  
+                  ?>
+                  
                 </ul>
               </div>
             </nav>
