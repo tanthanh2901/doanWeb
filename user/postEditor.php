@@ -2,22 +2,30 @@
     require '../inc/init.php';
     require "../classes/auth.php";
 
-    $conn = require "../inc/db.php";
-    $categories = Category::getAllCategories($conn);
-    $states = State::getAllStates($conn);
-    $updatePath = 'postUpdate.php';
+    Auth::requireLogin();
+    $user = $_SESSION['user'];
   
-    if(isset($_GET['p']) && !empty($_GET['p'])){
-        $postID = intval($_GET['p']);
-        $postDetail = PostDetail::getPostDetailByUserID($postID, 1, $conn);
-        $postTitle = $postDetail->title;
-        $postImg = $postDetail->img;
-        $postContent = $postDetail->content;
-        $postStateID = $postDetail->stateID;
-        $postcategories = $postDetail->category;
-    }else{
-        die('You dont specific your postID');
-        header('Location: /index.php');
+    $roles = $user->role;
+    if(in_array('USER', $roles)){
+        $conn = require "../inc/db.php";
+        $categories = Category::getAllCategories($conn);
+        $states = State::getAllStates($conn);
+        $updatePath = 'postUpdate.php';
+      
+        if(isset($_GET['p']) && !empty($_GET['p'])){
+            $postID = intval($_GET['p']);
+            $postDetail = PostDetail::getPostDetailByUserID($postID, 1, $conn);
+            $postTitle = $postDetail->title;
+            $postImg = $postDetail->img;
+            $postContent = $postDetail->content;
+            $postStateID = $postDetail->stateID;
+            $postcategories = $postDetail->category;
+        }else{
+            die('You dont specific your postID');
+            header('Location: /index.php');
+        }
+    }else {
+        header("Location: ../index.php");
     }
 ?>
 

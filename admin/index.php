@@ -1,19 +1,21 @@
 <?php 
     require '../inc/init.php';
 
-    $conn = require '../inc/db.php';
-    $userID = 2;
+    Auth::requireLogin();
+    $user = $_SESSION['user'];
+    $roles = $user->role;
+    if(in_array('ADMIN', $roles)){
+        $conn = require '../inc/db.php';
+        $userID = $user->id;
 
-    $user = User::getUser($conn, $userID);
+        $categories = Category::getAllCategories($conn);
 
-    $categories = Category::getAllCategories($conn);
-
-    $postHref = 'posts.php';
-    $postspageable = Post::getAllPostsByAllStates(0, $conn);
-    $posts = $postspageable->content;
-
-
-
+        $postHref = 'posts.php';
+        $postspageable = Post::getAllPostsByAllStates(0, $conn);
+        $posts = $postspageable->content;
+    }else {
+        header("Location: ../index.php");
+    }
 ?>
 
 <!DOCTYPE html>

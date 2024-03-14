@@ -1,37 +1,45 @@
 <?php
     require '../inc/init.php';
-    $conn = require '../inc/db.php';
-
-    $userID = 1;
-
-    $user = User::getUser($conn, $userID);
-    $postId = $_POST['postID'];
-    $content = $_POST['postContent'];
-    $postImg = $_POST['postImg'];
-    $postTitle = $_POST['postTitle'];
-    $stateID = $_POST['state'];
-    $categories = $_POST['categories'];
-    $categoriesArray = explode(',', $categories);
-
-    // $post = Post::getPostByUserID($userID, $postId, $conn);
-    $postDetail = PostDetail::getPostDetailByUserID($postId, $userID, $conn);
-
-    // get categories
-    $categoryIDs = array();
-    $fetchedCategories = Category::getCategories($categoriesArray, $conn);
-    foreach($fetchedCategories as $fetchedCategory){
-        $categoryIDs[] = $fetchedCategory->id;
+    
+    Auth::requireLogin();
+    $user = $_SESSION['user'];
+    
+    $roles = $user->role;
+    if(in_array('USER', $roles)){
+        $conn = require '../inc/db.php';
+        $userID = $user->id;
+        $user = User::getUser($conn, $userID);
+        $postId = $_POST['postID'];
+        $content = $_POST['postContent'];
+        $postImg = $_POST['postImg'];
+        $postTitle = $_POST['postTitle'];
+        $stateID = $_POST['state'];
+        $categories = $_POST['categories'];
+        $categoriesArray = explode(',', $categories);
+    
+        // $post = Post::getPostByUserID($userID, $postId, $conn);
+        $postDetail = PostDetail::getPostDetailByUserID($postId, $userID, $conn);
+    
+        // get categories
+        $categoryIDs = array();
+        $fetchedCategories = Category::getCategories($categoriesArray, $conn);
+        foreach($fetchedCategories as $fetchedCategory){
+            $categoryIDs[] = $fetchedCategory->id;
+        }
+    
+        $categoryIDsStr = array_map('strval', $categoryIDs);
+    
+        $postDetail->content = $content ?? $postDetail->content;
+        $postDetail->title = $postTitle ?? $postDetail->title;
+        $postDetail->img = $postImg ?? $postDetail->img;
+        $postDetail->stateID = $stateID ?? $postDetail->stateID;
+        $postDetail->category = $categoryIDsStr;
+    
+        $state = $postDetail->updatePostDetail($conn);
+    }else {
+        header("Location: ../index.php");
     }
 
-    $categoryIDsStr = array_map('strval', $categoryIDs);
-
-    $postDetail->content = $content ?? $postDetail->content;
-    $postDetail->title = $postTitle ?? $postDetail->title;
-    $postDetail->img = $postImg ?? $postDetail->img;
-    $postDetail->stateID = $stateID ?? $postDetail->stateID;
-    $postDetail->category = $categoryIDsStr;
-
-    $state = $postDetail->updatePostDetail($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">

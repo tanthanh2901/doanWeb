@@ -1,15 +1,16 @@
 <?php
     require '../inc/init.php';
-    // require '../config.php';
-    // require '../classes/database.php';
-    // require '../classes/state.php';
-    // require '../classes/category.php';
-    // require '../classes/user.php';
     Auth::requireLogin();
-    $conn = require '../inc/db.php';
-    $states = State::getAllStates($conn);
-    $categories = Category::getAllCategories($conn);
-    $user = User::getUser($conn, 1);
+
+    $user = $_SESSION['user'];
+    $roles = $user->role;
+    if(in_array('USER', $roles)){
+        $conn = require '../inc/db.php';
+        $states = State::getAllStates($conn);
+        $categories = Category::getAllCategories($conn);
+    }else {
+        header("Location: ../index.php");
+    }
 
 ?>
 <!DOCTYPE html>

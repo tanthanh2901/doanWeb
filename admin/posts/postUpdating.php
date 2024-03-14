@@ -1,33 +1,41 @@
 <?php
     require '../../inc/init.php';
-    $conn = require '../../inc/db.php';
 
-    $postId = $_POST['postID'];
-    $content = $_POST['postContent'];
-    $postImg = $_POST['postImg'];
-    $postTitle = $_POST['postTitle'];
-    $stateID = $_POST['state'];
-    $categories = $_POST['categories'];
-    $categoriesArray = explode(',', $categories);
+    Auth::requireLogin();
+    $user = $_SESSION['user'];
+    $roles = $user->role;
+    if(in_array('ADMIN', $roles)){
+        $conn = require '../../inc/db.php';
 
-    $postDetail = PostDetail::getPostDetailAllState($postId, $conn);
+        $postId = $_POST['postID'];
+        $content = $_POST['postContent'];
+        $postImg = $_POST['postImg'];
+        $postTitle = $_POST['postTitle'];
+        $stateID = $_POST['state'];
+        $categories = $_POST['categories'];
+        $categoriesArray = explode(',', $categories);
 
-    // get categories
-    $categoryIDs = array();
-    $fetchedCategories = Category::getCategories($categoriesArray, $conn);
-    foreach($fetchedCategories as $fetchedCategory){
-        $categoryIDs[] = $fetchedCategory->id;
+        $postDetail = PostDetail::getPostDetailAllState($postId, $conn);
+
+        // get categories
+        $categoryIDs = array();
+        $fetchedCategories = Category::getCategories($categoriesArray, $conn);
+        foreach($fetchedCategories as $fetchedCategory){
+            $categoryIDs[] = $fetchedCategory->id;
+        }
+
+        $categoryIDsStr = array_map('strval', $categoryIDs);
+
+        $postDetail->content = $content ?? $postDetail->content;
+        $postDetail->title = $postTitle ?? $postDetail->title;
+        $postDetail->img = $postImg ?? $postDetail->img;
+        $postDetail->stateID = $stateID ?? $postDetail->stateID;
+        $postDetail->category = $categoryIDsStr;
+
+        $state = $postDetail->updatePostDetail($conn);
+    }else {
+        header("Location: ../../index.php");
     }
-
-    $categoryIDsStr = array_map('strval', $categoryIDs);
-
-    $postDetail->content = $content ?? $postDetail->content;
-    $postDetail->title = $postTitle ?? $postDetail->title;
-    $postDetail->img = $postImg ?? $postDetail->img;
-    $postDetail->stateID = $stateID ?? $postDetail->stateID;
-    $postDetail->category = $categoryIDsStr;
-
-    $state = $postDetail->updatePostDetail($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">

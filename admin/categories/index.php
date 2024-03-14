@@ -1,7 +1,15 @@
 <?php
     require '../../inc/init.php';
-    $conn = require '../../inc/db.php';
-    $categories = Category::getAllCategories($conn);
+
+    Auth::requireLogin();
+    $user = $_SESSION['user'];
+    $roles = $user->role;
+    if(in_array('ADMIN', $roles)){
+        $conn = require '../../inc/db.php';
+        $categories = Category::getAllCategories($conn);
+    }else {
+        header("Location: ../../index.php");
+    }
 ?>
 
 <!DOCTYPE html>

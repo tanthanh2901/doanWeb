@@ -1,9 +1,13 @@
 <?php
     require '../../inc/init.php';
+    Auth::requireLogin();
+    $user = $_SESSION['user'];
+    $roles = $user->role;
+    if(in_array('ADMIN', $roles)){
 
-    // $configFile = fopen("../../config.php", "r") or die("Unable to open file!");
-    // echo fread($configFile, filesize("../../config.php"));
-    // fclose($configFile);
+    }else {
+        header("Location: ../../index.php");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,15 +1,23 @@
 <?php
     require '../../inc/init.php';
-    $conn = require '../../inc/db.php';
 
-    if(isset($_GET['page']) && !empty($_GET['page'])){
-        $page = intval($_GET['page']);
-    }else $page = 0;
+    Auth::requireLogin();
+    $user = $_SESSION['user'];
+    $roles = $user->role;
+    if(in_array('ADMIN', $roles)){
+        $conn = require '../../inc/db.php';
 
-    $postHref = 'postEditor.php';
-    $postsPageable = Post::getAllPostsByAllStates($page, $conn);
-    $posts = $postsPageable->content;
-    $totalPages = $postsPageable->totalPages;
+        if(isset($_GET['page']) && !empty($_GET['page'])){
+            $page = intval($_GET['page']);
+        }else $page = 0;
+
+        $postHref = 'postEditor.php';
+        $postsPageable = Post::getAllPostsByAllStates($page, $conn);
+        $posts = $postsPageable->content;
+        $totalPages = $postsPageable->totalPages;
+    }else {
+        header("Location: ../../index.php");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
