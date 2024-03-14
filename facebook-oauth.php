@@ -4,10 +4,10 @@ require "inc/init.php";
 // Connect to database
 $conn = require "inc/db.php";
 // Update the following variables
-$facebook_oauth_app_id = 'YOUR_APP_ID';
-$facebook_oauth_app_secret = 'YOUR_APP_SECRET';
+$facebook_oauth_app_id = '299931266442106';
+$facebook_oauth_app_secret = 'c268983557cabf79eb82274af9d55e47';
 // Must be the direct URL to the facebook-oauth.php file
-$facebook_oauth_redirect_uri = 'REDIRECT_URL';
+$facebook_oauth_redirect_uri = 'http://localhost/blog/doanWeb/facebook-oauth.php';
 $facebook_oauth_version = 'v19.0';
 // If the captured code param exists and is valid
 if (isset($_GET['code']) && !empty($_GET['code'])) {

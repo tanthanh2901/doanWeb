@@ -4,9 +4,9 @@ require "inc/init.php";
 $conn = require "inc/db.php";
 
 // Update the following variables
-$google_oauth_client_id = 'YOUR_CLIENT_ID';
-$google_oauth_client_secret = 'YOUR_CLIENT_SECRET';
-$google_oauth_redirect_uri = 'REDIRECT_URL';
+$google_oauth_client_id = '729349237408-u0looh5jgfl91sriejbsinn5rqhvmphk.apps.googleusercontent.com';
+$google_oauth_client_secret = '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';
+$google_oauth_redirect_uri = 'http://localhost/blog/doanWeb/google-oauth.php';
 $google_oauth_version = 'v3';
 // If the captured code param exists and is valid
 if (isset($_GET['code']) && !empty($_GET['code'])) {

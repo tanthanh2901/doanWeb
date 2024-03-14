@@ -1,4 +1,6 @@
-<?php require "inc/header.php"; ?>
+<?php require "inc/header.php"; 
+require "./inc/init.php";
+?>
 
     <!--================ Start banner Area =================-->
     <section class="banner-area relative">
