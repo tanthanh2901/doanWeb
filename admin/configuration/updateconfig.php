@@ -29,7 +29,7 @@
         // fclose($configContent);
 
         echo "Config updated successfully!";
-        header('Location: index.php');
     }
+    header('Location: index.php');
 
 ?>
