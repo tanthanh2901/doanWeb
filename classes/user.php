@@ -48,6 +48,20 @@
 
             return $user;
         }
+
+        public static function getUserByUsername($username, $conn){
+            $sql = "
+                select * from users
+                where username=:username;
+            ";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':username', $username, PDO::PARAM_STR);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'User');
+            $stmt->execute();
+            $user = $stmt->fetch();
+
+            return $user;
+        }
         // Thêm phương thức adduser
         public function addUser($conn){
             if($this->validate()){  

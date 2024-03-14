@@ -1,39 +1,43 @@
 <?php
   require '../inc/init.php';
-  $conn = require '../inc/db.php';
-  $user = User::getUser($conn, 1);
+  Auth::requireLogin();
+  $user = $_SESSION['user'];
 
-  $postHref = 'postEditor.php';
+  $roles = $user->role;
 
-  $totalPosts = Post::getTotalPosts(1, $conn);
-
-  $totalPostsPerState = Post::getTotalPostsPerState(1, $conn);
-
-  $states = State::getAllStates($conn);
-
+  if(in_array('USER', $roles)){
+    $conn = require '../inc/db.php';
   
+    $username = $user->username;
+    $postHref = 'postEditor.php';
+    $totalPosts = Post::getTotalPosts($user->id, $conn);
+    $totalPostsPerState = Post::getTotalPostsPerState($user->id, $conn);
+    $states = State::getAllStates($conn);
   
-  $page = 0;
-  if(isset($_GET['page']) && !empty($_GET['page'])){
-    $page = intval($_GET['page']);
+    $page = 0;
+    if(isset($_GET['page']) && !empty($_GET['page'])){
+      $page = intval($_GET['page']);
+    }
+  
+    if(isset($_GET['filter']) && !empty($_GET['filter'])){
+      // state filter
+      $requestParam = $_GET['filter'];
+      $state = State::getState($requestParam, $conn);
+  
+      
+    }else{
+      $state = State::getPublicState($conn);
+      $requestParam = $state->id;
+    }
+  
+    $filter = array('state'=>$requestParam);
+  
+    $postsPageable = Post::getPostsByUserID($user->id, $state->id, $page, $conn);
+    $posts = $postsPageable->content;
+    $totalPages = $postsPageable->totalPages;
+  }else {
+    header("Location: ../index.php");
   }
-
-  if(isset($_GET['filter']) && !empty($_GET['filter'])){
-    // state filter
-    $requestParam = $_GET['filter'];
-    $state = State::getState($requestParam, $conn);
-
-    
-  }else{
-    $state = State::getPublicState($conn);
-    $requestParam = $state->id;
-  }
-
-  $filter = array('state'=>$requestParam);
-
-  $postsPageable = Post::getPostsByUserID(1, $state->id, $page, $conn);
-  $posts = $postsPageable->content;
-  $totalPages = $postsPageable->totalPages;
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +83,7 @@
                           style="width: 180px; border-radius: 10px;"> -->
                       </div>
                       <div class="flex-grow-1 ms-3">
-                          <h5 class="mb-1"><?=$user->username?></h5>
+                          <h5 class="mb-1"><?=$username?></h5>
                           <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
                             style="background-color: #efefef;">
                               <div class="px-3">

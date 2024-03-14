@@ -9,7 +9,8 @@
 
         try{
             if (User::authenticate($conn, $email, $password)) {
-                Auth::login();
+
+                Auth::login($email, $conn);
                 Header('Location: index.php');
             } 
             else {

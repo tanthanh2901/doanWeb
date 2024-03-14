@@ -38,44 +38,6 @@ let postThumbnailImage = document.getElementById('post-thumbnail-image');
 // })
 
 
-
-
-// update post
-  let postContent = document.getElementById('text-input-hiden');
-
-  var lines = postContent.children;
-  Array.from(lines).forEach(line=>{
-      if(line.tagName!== 'H1'){
-          if(line.tagName !== 'DIV'){
-              var newLine = document.createElement('div');
-              newLine.classList.add("line");
-              newLine.setAttribute('contenteditable', 'true');
-              newLine.appendChild(line);
-  
-              writingArea.appendChild(newLine);
-          }
-          else{
-              line.classList.add('line');
-              line.setAttribute('contenteditable', true);
-  
-              writingArea.appendChild(line);
-          }
-      }
-      else{
-          line.setAttribute('contenteditable', 'true');
-          writingArea.appendChild(line);
-      }
-  })
-
-
-
-
-
-
-
-
-
-
 // modal
 let imageUrl = null;
 // upload image from system

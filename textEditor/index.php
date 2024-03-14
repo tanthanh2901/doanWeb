@@ -231,6 +231,6 @@
     <!-- <script src="../js/imgProperties.js"></script> -->
     <script src="../js/categoryCheckBox.js"></script>
     <script src="../js/createPost.js"></script>
-    <script src="../js/text-editor.js" defer></script>
+    <script src="../js/text-editor.js"></script>
 
 </html>

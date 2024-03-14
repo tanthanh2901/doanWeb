@@ -12,9 +12,13 @@
             }
         }
         // Xử lý đăng nhập
-        public static function login(){
+        public static function login($username, $conn){
             session_regenerate_id(true);
             $_SESSION['logged_in'] = true;
+
+            $user = new UserRoles($username);
+            $userinfo = $user->getUserRoles($conn);
+            $_SESSION['user'] = $userinfo;
         }
         // Xử lý đăng xuất
         public static function logout(){
