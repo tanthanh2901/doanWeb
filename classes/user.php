@@ -77,5 +77,29 @@
                 return false;
             }
         }
+
+        public static function getPostsByUser($userID, $stateID, $conn){
+            $sql = "select * from posts where userID=:userID AND stateID=:stateID";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':stateID', $stateID, PDO::PARAM_STR);
+            $stmt->bindValue(':userID', $userID, PDO::PARAM_STR);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post'); //Trả về 1 đổi tượng
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $states = $stmt->fetchAll(); // Lấy ra cái đối tượng
+            return $states;
+        }
+
+        public static function getCountPost($conn, $userID) {
+            $query = "SELECT COUNT(*) AS post_count 
+                    FROM posts 
+                    WHERE userID = :userID";
+
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+            return $result['post_count'];
+        }
     }
 ?>
