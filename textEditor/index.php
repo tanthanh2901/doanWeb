@@ -5,7 +5,7 @@
     // require '../classes/state.php';
     // require '../classes/category.php';
     // require '../classes/user.php';
-
+    Auth::requireLogin();
     $conn = require '../inc/db.php';
     $states = State::getAllStates($conn);
     $categories = Category::getAllCategories($conn);

@@ -97,9 +97,17 @@
                       <a class="dropdown-item" href="elements.php">Elements</a>
                     </div>
                   </li> -->
-                  <li class="nav-item">
+                  <!-- <li class="nav-item">
                     <a class="nav-link" href="elements.php">Elements</a>
-                  </li>
+                  </li> -->
+                  <?php
+                  if(Auth::isLoggedIn()){
+                    echo '<li class="nav-item">' 
+                    .'<a class="nav-link" href="./textEditor/index.php">Viết bài</a>'.
+                    '</li>';
+                  }
+                  ?>
+                  
                   <li class="nav-item">
                     <a class="nav-link" href="blog-single.php">Blog Detail</a>
                   </li>
