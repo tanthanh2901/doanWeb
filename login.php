@@ -1,120 +1,91 @@
 <?php
-    require "config.php";
-    require "classes/database.php";
-    require "classes/user.php";
-    require "classes/dialog.php";
-    require "classes/auth.php";
-    $conn = require "inc/db.php";
+    require "inc/init.php";
+    ini_set('display_errors', 'off');
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $conn = require "inc/db.php";
+        
         $email = $_POST["email"];
         $password = $_POST["password"];
-        $checkField = new Dialog();
-        $errors = $checkField->checkLogin($email, $password);
-        if (count($errors)>0) {
-            foreach ($errors as  $error){
-                echo "<div class='alert alert-danger'>$error</div>";
+
+        try{
+            if (User::authenticate($conn, $email, $password)) {
+                Auth::login();
+                Header('Location: index.php');
+            } 
+            else {
+                Dialog::show("Incorrect user or password");
             }
         }
-        else {
-            try{
-                if (User::authenticate($conn, $email, $password)) {
-                    Auth::login();
-                    Header('Location: index.php');
-                } 
-                else {
-                    echo"<div class='alert alert-danger'>Incorrect user or password</div>";
-                }
-            }
-            catch(PDOException $e){
-                echo $e->getMessage();
-                // Có thể gọi trang xử lí lỗi
-                // Header('Location: error.php');
-            }
+        catch(PDOException $e){
+            echo $e->getMessage();
+            // Có thể gọi trang xử lí lỗi
+            // Header('Location: error.php');
         }
     }
-
-    require_once "vendor/google/index.php";
-    require_once "vendor/facebook/index.php";
-
+    
 ?>
 
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-  	<title>Login-Form</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Head -->
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login</title>
+        <!-- Reset CSS -->
+        <link rel="stylesheet" href="./css/reset.css" />
 
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet">
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
-	<link rel="stylesheet" href="css/bootstrap-2.css">
+        <!-- Styles -->
+        <link rel="stylesheet" href="./css/styles.css" />
+    </head>
 
-	</head>
-	<body>
-	<section class="m-5">
-		<div class="container">
-			<!-- back to home -->
-			<div class="row justify-content-center">
-				<div class="d-flex justify-content-center align-items-center p-4" >
-					<a href="index.php"><img src="img/logo.png" alt="logo"></a>
-				</div>
-			</div>
-			<!-- login -->
-			<div class="row justify-content-center">
-				<div class="col-md-12 col-lg-10">
-					<div class="wrap d-md-flex">
-						<div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last">
-							<div class="text w-100">
-								<h2>Welcome to Login</h2>
-								<p>Don't have an account?</p>
-								<a href="registration.php" class="btn btn-white btn-outline-white">Sign Up</a>
-							</div>
-			      		</div>
-						<div class="login-wrap p-4 p-lg-5">
-							<div class="d-flex">
-								<div class="w-100">
-									<h3 class="mb-4" style="margin-top: -5px; font-weight: 500;">Sign In</h3>
-								</div>
-								<div class="social-media d-flex justify-content-end">
-									<?php	
-									if ($loginUrl == '') {
-										Auth::login();
-										header('Location: index.php');
-									} else {
-										echo $loginUrl;
-									}
-									if ($login_button == '') {
-										Auth::login();
-										header('Location: index.php');
-									} else {
-										echo $login_button;
-									}
-									?>
-								</div>
-							</div>
-							<form action="login.php" class="signin-form" method="post">
-								<div class="form-group mb-3">
-									<label class="label" for="name">Email</label>
-									<input type="Email" class="form-control" placeholder="Email" name="email" required>
-								</div>
-								<div class="form-group mb-3">
-									<label class="label" for="password">Password</label>
-									<input type="password" class="form-control" placeholder="Password" name="password" required>
-								</div>
-								<div class="form-group">
-									<input type="submit" value="Login" name="login" class="form-control btn btn-primary submit px-3">
-								</div>
-							</form>
-
-						</div>
-		      		</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	</body>
+    <!-- Body -->
+    <body>
+        <nav>
+            <a href="index.php"><img src="./img/logo.png" alt="logo"></a>
+        </nav>
+        <section class="container forms">
+            <div class="form login">
+                <div class="form-content">
+                    <header>Login</header>
+                    <form action="login.php" method="post">
+                        <div class="field input-field">
+                            <input type="Email" placeholder="Email" name="email" class="input" required>
+                        </div>
+                        <div class="field input-field">
+                            <input type="password" placeholder="Password" name="password" class="password" required>
+                            <i class='bx bx-hide eye-icon'></i>
+                        </div>
+                        
+                        <div class="field button-field">
+                            <button type="submit" value="Login" name="login">Login</button>
+                        </div>
+                    </form>
+                    <div class="form-link">
+                        <span>Don't have an account? <a href="signup.php" class="link signup-link">Signup</a></span>
+                    </div>
+                </div>
+                <div class="line"></div>
+                <div class="media-options">
+                    <a href="google-oauth.php" class="google-login-btn">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 488 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/></svg>
+                        </span>
+                        <div class="desc"><p>Login with Google</p></div>
+                    </a>
+                </div>
+                <div class="media-options">
+                    <a href="facebook-oauth.php" class="facebook-login-btn">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
+                        </span>
+                        <div class="desc"><p>Login with Facebook</p></div>
+                    </a>
+                </div>
+            </div>
+            
+        </section>
+    </body>
 </html>
-
