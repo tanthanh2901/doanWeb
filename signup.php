@@ -6,12 +6,13 @@
         $password = $_POST['password'];
         $passwordRepeat = $_POST["repeat_password"];
         $user = new User($email, $password);
+        // echo json_encode($user);
         try{
             if($user->addUser($conn)){
                 Dialog::show("Add User Successfully! redirect to Login...");
             }
             else{
-                    Dialog::show("Cannot Add User!");
+                Dialog::show("Cannot Add User!");
             }
         }
         catch(PDOException $e){
