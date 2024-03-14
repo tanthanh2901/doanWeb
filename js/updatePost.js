@@ -1,5 +1,4 @@
 let textEditorForm = document.getElementById("text-editor");
-   
 async function filterElement(line){
     const childEle = line.firstChild;
     if(childEle){
@@ -124,3 +123,65 @@ textEditorForm.addEventListener('submit', (event)=>{
     document.body.appendChild(form);
     form.submit();
 })      
+// yesConfirmBtn.addEventListener('click', ()=>{
+//   var title = writingArea.querySelector("h1.title").innerHTML;
+//   // creating a new form
+//   // var imgPropertiesEle = writingArea.querySelectorAll('img-properties');
+//   // imgPropertiesEle.forEach(ele => ele.remove());
+//   var result = validate(writingArea);
+//   result = removeCommentsFromHTML(result);
+//   result = minifyHTML(result);
+
+//   var form = document.createElement('form');
+//   form.method=textEditorForm.method;
+//   form.action=textEditorForm.action;
+
+//   // post id 
+//   var inputPostID = document.createElement('input');
+//   const postID = textEditorForm.querySelector('input[name="postID"]').value;
+//   inputPostID.name = 'postID';
+//   inputPostID.value = postID;
+//   form.appendChild(inputPostID);
+
+//   // post title
+//   var inputTitle = document.createElement('input');
+//   inputTitle.name = 'postTitle';
+//   inputTitle.value = title;
+//   form.appendChild(inputTitle);
+
+//   // post content 
+//   var inputContent = document.createElement('input');
+//   inputContent.name = 'postContent';
+//   inputContent.value = result;
+//   form.appendChild(inputContent);
+
+//   // post image 
+//   var inputImage = document.createElement('input');
+//   var postImg = textEditorForm.querySelector('#post-thumbnail-image');
+//   inputImage.name = 'postImg';
+//   inputImage.value = postImg.src;
+//   form.appendChild(inputImage);
+
+//   // state
+//   const state = textEditorForm.querySelector('#state-selector').value;
+//   var inputState = document.createElement('input');
+//   inputState.name = 'state';
+//   inputState.value = state;
+
+//   form.appendChild(inputState);
+
+//   // categories
+//   const categories = [];
+//   const categoryInputs = textEditorForm.querySelectorAll('.category-check-input:checked');
+//   categoryInputs.forEach((category) => {
+//       categories.push(category.value);
+//   });
+//   var inputCategory = document.createElement('input');
+//   inputCategory.name = 'categories';
+//   inputCategory.value = categories;
+//   form.appendChild(inputCategory);
+
+//   submit
+//   document.body.appendChild(form);
+//   form.submit();
+// })

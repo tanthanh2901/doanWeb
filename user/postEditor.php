@@ -64,5 +64,5 @@
 <script src="../js/categoryCheckBox.js"></script>
 <script src="../js/text-editor.js"></script>
 <script src="../js/updatePost.js"></script>
-<script src="../js/confirmModal.js"></script>
+<script src="../js/confirmModalForm.js"></script>
 </html>

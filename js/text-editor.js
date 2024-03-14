@@ -19,27 +19,22 @@ let nextButton = document.getElementById('next-button');
 let selectButtons = document.getElementsByClassName('select-button');
 let toggleModalButtons = document.querySelectorAll('.toggle-button');
 let textEditorSubmit = document.getElementById('text-editor-submit');
-// var confirmModal = document.querySelector('confirm-modal');
+// var confirmModalForm = document.querySelector('confirm-modal-form');
 
 let modalOverlay = document.querySelector('.modal');
 let inputPostImage = document.getElementById('input-post-image');
 let postThumbnailImage = document.getElementById('post-thumbnail-image');
 
-// // confirm data toggle and add data
-// function confirmModalFunc(confirmPath, confirmData, successfulMess, failedMess){
+// confirm data toggle and add data
+// function confirmModalFunc(){
 //   // toggle confirm modal
-//   var innerConfirmModal = confirmModal.querySelector('.confirm-modal');
+//   var innerConfirmModal = confirmModalForm.querySelector('.confirm-modal');
 //   innerConfirmModal.classList.toggle('d-block');
 //   // add data to confirm modal
-
-//   confirmModal.setAttribute('confirm-path', confirmPath);
-//   confirmModal.setAttribute('confirm-data', JSON.stringify(confirmData));
-//   confirmModal.setAttribute('successful-message', successfulMess);
-//   confirmModal.setAttribute('falied-message', failedMess);
 // }
 // // trigger confirm modal
 // textEditorSubmit.addEventListener('click', ()=>{
-//   confirmPath
+//   confirmModalFunc()
 // })
 
 
