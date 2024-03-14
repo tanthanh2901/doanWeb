@@ -47,6 +47,7 @@ class SearchDropdown extends HTMLElement{
                 .then(response => response.json())
                 .then(data => {
                     if(data.length>0){
+                        console.log(data)
                         data.forEach(post => {
                             var a = document.createElement('a');
                             a.classList.add("dropdown-item");

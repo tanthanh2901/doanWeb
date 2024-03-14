@@ -204,6 +204,28 @@
 
             return $pageable;
         }
+        public static function searchAllPosts($postTitle, $pageNumber,$conn){
+            $sql = "
+                select * from posts 
+                where postTitle like :postTitle
+                limit :pageSize offset :pageNumber
+            ";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':pageSize', PAGE_SIZE, PDO::PARAM_INT);
+            $stmt->bindValue(':pageNumber', $pageNumber*PAGE_SIZE, PDO::PARAM_INT);
+            $stmt->bindValue(':postTitle', '%'.$postTitle.'%', PDO::PARAM_STR);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post'); //Trả về 1 đổi tượng
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $posts = $stmt->fetchAll(); // Lấy ra cái đối tượng
+
+            // pageable
+            $condition = "where postTitle like '%$postTitle%'";
+            $totalPages = Pageable::getTotalPages('posts', $condition, $conn);
+            $pageable = new Pageable(false, false, $posts, $totalPages, $pageNumber);
+
+            return $pageable;
+        }
 
         // add post 
         public function addPost($conn){
