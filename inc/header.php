@@ -116,8 +116,9 @@
                   </li> -->
                   <?php
                   if(Auth::isLoggedIn()){
-                    echo '<li class="nav-item">'
-                        .' <a class="nav-link" href="logout.php">Logout</a>'.
+                    echo '<li class="nav-item" style="display: flex;">'
+                        .' <a class="nav-link" href="logout.php">Logout</a>'
+                        .' <a class="nav-link" href="userInformation.php">User information</a>'.
                     '</li>';
                   } else {
                       echo '<li class="nav-item">'
