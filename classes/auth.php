@@ -19,6 +19,8 @@
             $user = new UserRoles($username);
             $userinfo = $user->getUserRoles($conn);
             $_SESSION['user'] = $userinfo;
+
+            $_SESSION['username'] = $username;
         }
         // Xử lý đăng xuất
         public static function logout(){
