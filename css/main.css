@@ -64,3 +64,12 @@
   .blog-details-content img{
     max-width: 680px;
   }
+
+  .category-group{
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+  }
+  .back-home{
+    position: absolute;
+    bottom: 20px;
+  }

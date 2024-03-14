@@ -1,3 +1,5 @@
+// parameters: categories (json format)
+
 class CategoryCheckBox extends HTMLElement{
     constructor(){
         super();

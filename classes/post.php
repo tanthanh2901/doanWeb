@@ -8,9 +8,8 @@
         public $userID;
         public $date;
 
-        public function __construct($id=null, $postTitle='', $postContentID='', $postImg='', $stateID='', $userID='', $date='') {
+        public function __construct($postTitle='', $postContentID='', $postImg='', $stateID='', $userID='', $date='') {
             if($postTitle!='' && $postContentID!='' && $stateID!='' && $userID!='' && $date != ''){
-                $this->id = $id;
                 $this->postTitle = $postTitle;
                 $this->postContentID = $postContentID;
                 $this->postImg = $postImg;
@@ -37,6 +36,21 @@
             $posts = $stmt->fetchAll(); // Lấy ra cái đối tượng
             // pageable
             $totalPages = Pageable::getTotalPages('posts', 'where stateID='.$stateID, $conn);
+            $pageable = new Pageable(false, false, $posts, $totalPages, $pageNumber);
+
+            return $pageable;
+        }
+
+        public static function getAllPostsByAllStates($pageNumber, $conn){
+            $sql = "SELECT * from posts limit :pageSize offset :pageNumber";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':pageSize', PAGE_SIZE, PDO::PARAM_INT);
+            $stmt->bindValue(':pageNumber', $pageNumber*PAGE_SIZE, PDO::PARAM_INT);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post'); //Trả về 1 đổi tượng
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $posts = $stmt->fetchAll(); // Lấy ra cái đối tượng
+            // pageable
+            $totalPages = Pageable::getTotalPages('posts', '', $conn);
             $pageable = new Pageable(false, false, $posts, $totalPages, $pageNumber);
 
             return $pageable;
@@ -155,6 +169,30 @@
             $stmt->bindValue(':pageNumber', $pageNumber*PAGE_SIZE, PDO::PARAM_INT);
             $stmt->bindValue(':postTitle', '%'.$postTitle.'%', PDO::PARAM_STR);
             $stmt->bindValue(':stateID', $stateID, PDO::PARAM_STR);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post'); //Trả về 1 đổi tượng
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $posts = $stmt->fetchAll(); // Lấy ra cái đối tượng
+
+            // pageable
+            $condition = "where postTitle like '%$postTitle%' and stateID=$stateID";
+            $totalPages = Pageable::getTotalPages('posts', $condition, $conn);
+            $pageable = new Pageable(false, false, $posts, $totalPages, $pageNumber);
+
+            return $pageable;
+        }
+        public static function searchPostsOfUser($postTitle, $stateID, $userID, $pageNumber,$conn){
+            $sql = "
+                select * from posts 
+                where postTitle like :postTitle and stateID=:stateID and userID=:userID
+                limit :pageSize offset :pageNumber
+            ";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':pageSize', PAGE_SIZE, PDO::PARAM_INT);
+            $stmt->bindValue(':pageNumber', $pageNumber*PAGE_SIZE, PDO::PARAM_INT);
+            $stmt->bindValue(':postTitle', '%'.$postTitle.'%', PDO::PARAM_STR);
+            $stmt->bindValue(':stateID', $stateID, PDO::PARAM_STR);
+            $stmt->bindValue(':userID', $userID, PDO::PARAM_INT);
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post'); //Trả về 1 đổi tượng
             $stmt->execute(); // Thực hiện câu lệnh sql
             $posts = $stmt->fetchAll(); // Lấy ra cái đối tượng

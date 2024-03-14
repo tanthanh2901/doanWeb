@@ -1,10 +1,7 @@
 <?php
-    require '../inc/init.php';
-    $conn = require '../inc/db.php';
+    require '../../inc/init.php';
+    $conn = require '../../inc/db.php';
 
-    $userID = 1;
-
-    $user = User::getUser($conn, $userID);
     $postId = $_POST['postID'];
     $content = $_POST['postContent'];
     $postImg = $_POST['postImg'];
@@ -13,8 +10,7 @@
     $categories = $_POST['categories'];
     $categoriesArray = explode(',', $categories);
 
-    // $post = Post::getPostByUserID($userID, $postId, $conn);
-    $postDetail = PostDetail::getPostDetailByUserID($postId, $userID, $conn);
+    $postDetail = PostDetail::getPostDetailAllState($postId, $conn);
 
     // get categories
     $categoryIDs = array();
@@ -40,8 +36,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post update</title>
 
-    <link rel="stylesheet" href="../css/bootstrap.css" />
-    <link rel="stylesheet" href="../css/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/bootstrap-datepicker.css" />
 </head>
 <body>
     <div class="vh-100 d-flex justify-content-center align-items-center">

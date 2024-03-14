@@ -26,7 +26,25 @@
             $stmt = $conn->prepare($sql);
             $stmt->bindValue(':stateID', $stateID, PDO::PARAM_STR);
             $stmt->bindValue(':postID', $postID, PDO::PARAM_STR);
-            $stmt->setFetchMode(PDO::FETCH_CLASS, 'PostInfo'); //Trả về 1 đổi tượng
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'PostDetail'); //Trả về 1 đổi tượng
+            $stmt->execute(); // Thực hiện câu lệnh sql
+            $postDetails = $stmt->fetchAll(); // Lấy ra cái đối tượng
+
+            $result = $postDetails[0];
+            $categories = array();
+            foreach($postDetails as $postDetail){
+                $categories[] = $postDetail->category;
+            }
+            $result->category = $categories;
+
+            return $result;
+        }
+
+        public static function getPostDetailAllState($postID, $conn){
+            $sql = "select * from postDetail where id=:postID";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':postID', $postID, PDO::PARAM_STR);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'PostDetail'); //Trả về 1 đổi tượng
             $stmt->execute(); // Thực hiện câu lệnh sql
             $postDetails = $stmt->fetchAll(); // Lấy ra cái đối tượng
 

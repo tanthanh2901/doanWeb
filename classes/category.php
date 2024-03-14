@@ -3,9 +3,8 @@
         public $id;
         public $category;
 
-        public function __construct($id='', $category='') {
-            if($id!='' && $category!=''){
-                $this->id = $id;
+        public function __construct($category='') {
+            if($category!=''){
                 $this->category = $category;
             }
         }
@@ -65,15 +64,40 @@
             $states = $stmt->fetchAll();
             return $states;
         }
-        // public static function getCategories($categories, $conn){
-        //     $categoriesStr = "'" . implode("','", $categories) . "'";
-        //     $sql = "select * from categories where category in (:categories)";
-        //     $stmt = $conn->prepare($sql);
-        //     $stmt->bindValue(':categories', $categoriesStr, PDO::PARAM_STR);
-        //     $stmt->setFetchMode(PDO::FETCH_CLASS, 'Category'); //Trả về 1 đổi tượng
-        //     $stmt->execute(); // Thực hiện câu lệnh sql
-        //     $states = $stmt->fetchAll(); // Lấy ra cái đối tượng
-        //     return $states;
-        // }
+        // add new category
+        public function addCategory($conn){
+            try {
+                //Tạo câu lệnh insert chống SQL injection
+                $sql = "
+                    insert into categories(category)
+                    values(:category);
+                ";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindValue(':category', $this->category, PDO::PARAM_STR);
+                
+                return $stmt->execute();
+            } catch (PDOException $e) {
+                $e->getMessage();
+                return false;
+            }
+        }
+        // delete category
+        public function deleteCategory($conn){
+            try {
+                //Tạo câu lệnh insert chống SQL injection
+                $sql = "
+                    delete from categories
+                    where id=:categoryID;
+                ";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindValue(':categoryID', $this->id, PDO::PARAM_STR);
+                
+                return $stmt->execute();
+            } catch (PDOException $e) {
+                $e->getMessage();
+                return false;
+            }
+        }
+
     }
 ?>

@@ -1,3 +1,5 @@
+// parameters: des-path (destination path), search-condition (json format), search-path
+
 class SearchDropdown extends HTMLElement{
     constructor(){
         super();
@@ -16,16 +18,31 @@ class SearchDropdown extends HTMLElement{
     connectedCallback(){
         let searchBar = document.getElementById('search-bar');
         let dropdownMenu = document.querySelector('.dropdown-menu');
+        var searchPath = this.getAttribute('search-path');
+        var searchCondition = this.getAttribute('search-condition');
+        var desPath = this.getAttribute('des-path');
+
+
         searchBar.addEventListener('keyup', (event)=>{
             var query = event.target.value;
-            dropdownMenu.innerHTML = '';
+            dropdownMenu.innerHTML='';
+
+            var data = JSON.parse(searchCondition);
+            data = {
+                ...data,
+                query: query
+            }
+            
+            data = JSON.stringify(data);
+
             if(query.length>2){
-                fetch('search.php', {
+                fetch(searchPath, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: 'query=' + encodeURIComponent(query),
+                    body: data
+                    // body: 'query=' + encodeURIComponent(query),
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -33,7 +50,7 @@ class SearchDropdown extends HTMLElement{
                         data.forEach(post => {
                             var a = document.createElement('a');
                             a.classList.add("dropdown-item");
-                            a.href= `blog-single.php?p=${post.id}`;
+                            a.href= `${desPath}?p=${post.id}`;
                             a.innerHTML = post.postTitle;
                             // console.log(a);
                             dropdownMenu.appendChild(a);
@@ -47,9 +64,6 @@ class SearchDropdown extends HTMLElement{
                     }
                 });
             }
-            // else{
-            //     dropdownMenu.classList.add('d-none');
-            // }
         })
     }
 }

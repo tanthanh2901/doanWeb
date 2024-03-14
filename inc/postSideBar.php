@@ -5,7 +5,7 @@
         <div class="single-sidebar-widget search-widget">
             <h4 class="category-title">Search</h4>
             <form class="search-form mt-20" action="archive.php">
-                <search-dropdown/>
+                <search-dropdown search-path='search.php' search-condition='{}' des-path='blog-single.php'>
             </form>
         </div>
     <!-- categories -->
