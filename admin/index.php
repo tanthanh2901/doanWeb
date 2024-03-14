@@ -42,6 +42,9 @@
     <link rel="stylesheet" href="../css/userDashboard.css"/>
 </head>
 <body>
+    <nav class="p-4 d-flex justify-content-center">
+        <a href="../index.php"><img src="../img/logo.png" alt="logo"></a>
+    </nav>
     <section class="vh-100">
         <div class="container py-5 h-100">
             <div class="row flex-column align-content-center">

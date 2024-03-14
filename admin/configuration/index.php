@@ -31,6 +31,9 @@
     <link rel="stylesheet" href="../../css/userDashboard.css"/>
 </head>
 <body>
+    <nav class="p-4 d-flex justify-content-center">
+        <a href="../../index.php"><img src="../../img/logo.png" alt="logo"></a>
+    </nav>
     <div class="container my-3 bg-light p-4">
         <form class="rounded " action="updateconfig.php" method="post" enctype="multipart/form-data">
             <div>
