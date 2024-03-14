@@ -79,12 +79,6 @@
                           <h5 class="mb-1"><?=$user->username?></h5>
                           <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
                             style="background-color: #efefef;">
-                              <?php foreach($totalPostsPerState as $postsperstate):?>
-                                <div class="px-3">
-                                  <p class="small text-muted mb-1"><?=$postsperstate?></p>
-                                  <p class="mb-0">976</p>
-                                </div>
-                              <?php endforeach;?>
                               <div class="px-3">
                                 <p class="small text-muted mb-1">Posts</p>
                                 <p class="mb-0"><?=$totalPosts?></p>

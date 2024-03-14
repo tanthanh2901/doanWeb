@@ -82,6 +82,11 @@
                                 <a href="posts">Posts <span class="ti-arrow-right"></span></a>    
                             </div>
                         </li>
+                        <li class="list-group-item">
+                            <div class="d-flex text-black">
+                                <a href="configuration">Configuration input <span class="ti-arrow-right"></span></a>    
+                            </div>
+                        </li>
                         <li class="list-group-item diabled">
                             <div class="d-flex text-black">
                                 <a>Create account <span class="ti-arrow-right"></span></a>    

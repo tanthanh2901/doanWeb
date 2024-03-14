@@ -46,8 +46,8 @@ saveCategoryBtn.addEventListener('click', ()=>{
 // confirm data toggle and add data
 function confirmModalFunc(confirmPath, confirmData, successfulMess, failedMess){
     // toggle confirm modal
-    var confirmCategory = confirmModal.querySelector('.confirm-modal');
-    confirmCategory.classList.toggle('d-block');
+    var innerConfirmModal = confirmModal.querySelector('.confirm-modal');
+    innerConfirmModal.classList.toggle('d-block');
     // add data to confirm modal
 
     confirmModal.setAttribute('confirm-path', confirmPath);
